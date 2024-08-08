@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
+
+using WindowsControls = System.Windows.Controls;
 
 namespace HttpShare.Controls;
 
-public partial class OutboxControl : UserControl
+public partial class OutboxControl : WindowsControls.UserControl
 {
 	private OutboxControlDataContext ParsedDataContext => (OutboxControlDataContext)DataContext;
 
