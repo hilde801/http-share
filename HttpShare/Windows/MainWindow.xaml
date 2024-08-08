@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:HttpShare.Controls"
+        xmlns:models="clr-namespace:HttpShare.Models"
         mc:Ignorable="d" Title="HTTP Share"
         Width="600" SizeToContent="Height" ResizeMode="NoResize">
+    <Window.DataContext>
+        <models:MainWindowDataContext />
+    </Window.DataContext>
+
     <StackPanel Orientation="Vertical" Margin="10">
         <TabControl Height="400">
             <TabItem Header="Outbox">
@@ -13,8 +18,9 @@
             </TabItem>
         </TabControl>
 
-        <Button Margin="0,5,0,0" Padding="3">
-            <TextBlock>Start Server</TextBlock>
+        <Button Margin="0,5,0,0" Padding="3"
+                Click="OnClickServerToggleButton">
+            <TextBlock Text="{Binding ServerToggleButtonText, Mode=OneWay}" />
         </Button>
     </StackPanel>
 </Window>
