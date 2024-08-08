@@ -9,5 +9,5 @@ public sealed class HomeController : Controller
 {
 	[HttpGet]
 	[Route("/")]
-	public IActionResult Index() => Ok(new { Message = "Hello, World!" });
+	public IActionResult Index() => View();
 }
