@@ -1,5 +1,6 @@
 using HttpShare.Models;
 using Microsoft.Win32;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -10,6 +11,9 @@ namespace HttpShare.Controls;
 public partial class OutboxControl : UserControl
 {
 	private OutboxControlDataContext ParsedDataContext => (OutboxControlDataContext)DataContext;
+
+
+	public ICollection<File> OutboxFiles => ParsedDataContext.OutboxFiles;
 
 
 	public OutboxControl()
