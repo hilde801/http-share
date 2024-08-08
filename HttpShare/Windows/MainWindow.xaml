@@ -9,7 +9,7 @@
     <StackPanel Orientation="Vertical" Margin="10">
         <TabControl Height="400">
             <TabItem Header="Outbox">
-                <controls:OutboxControl />
+                <controls:OutboxControl x:Name="outboxControl" />
             </TabItem>
         </TabControl>
 
