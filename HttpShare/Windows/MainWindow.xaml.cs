@@ -1,5 +1,6 @@
 using HttpShare.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.Windows;
 
@@ -26,11 +27,12 @@ public partial class MainWindow : Window
 		if (ParsedDataContext.IsServerRunning)
 		{
 			WebApplicationBuilder builder = WebApplication.CreateBuilder();
+			builder.Services.AddControllersWithViews();
 
 			WebApplication = builder.Build();
+			WebApplication.MapControllers();
 
-			// TODO For testing purposes only - remove this later
-			WebApplication.Map("/", () => "Hello, World!");
+			WebApplication.Urls.Add("http://*:80");
 
 			await WebApplication.StartAsync();
 		}
