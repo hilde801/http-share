@@ -13,9 +13,14 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 	{
 		ViewData["PageTitle"] = $"{serverSession.HostName} - HTTP Share";
 
-		bool isInSendMode = serverSession is ISendSession,
-			isInReceiveMode = serverSession is IReceiveSession;
+		bool sendSession = serverSession is ISendSession,
+			receiveSession = serverSession is IReceiveSession;
 
-		return Ok(new { Message = "Will be implemented later!" });
+		ViewData["SendSession"] = sendSession;
+		ViewData["ReceiveSession"] = receiveSession;
+
+		if (sendSession) ViewData["OutboxFiles"] = (serverSession as ISendSession)!.OutboxFiles;
+
+		return View();
 	}
 }

@@ -1,6 +1,27 @@
+@using HttpShare
+
 @{
     Layout = "../_Layout";
+
+    bool sendSession = (bool)ViewData["SendSession"]!;
+    bool receiveSession = (bool)ViewData["ReceiveSession"]!;
 }
 
-<h1>Hello, World!</h1>
-<p>This application is still under development...</p>
+@if (sendSession)
+{
+    ICollection<File> outboxFiles = (ViewData["OutboxFiles"] as ICollection<File>)!;
+
+    if (outboxFiles.Count > 0)
+    {
+        <ol>
+            @foreach (File file in outboxFiles)
+            {
+                <li>@file.Filename</li>
+            }
+        </ol>
+
+        <a href="/Download/">Download All</a>
+    }
+}
+
+@* TODO Add more stuff here later *@
