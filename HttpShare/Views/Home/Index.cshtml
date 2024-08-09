@@ -11,8 +11,11 @@
 {
     ICollection<File> outboxFiles = (ViewData["OutboxFiles"] as ICollection<File>)!;
 
-    if (outboxFiles.Count > 0)
+    if (outboxFiles.Count == 0)
     {
+        return;
+    }
+
         <ol>
             @foreach (File file in outboxFiles)
             {
@@ -22,6 +25,10 @@
 
         <a href="/Download/">Download All</a>
     }
+
+@if (sendSession && receiveSession)
+{
+    <hr />
 }
 
 @* TODO Add more stuff here later *@
