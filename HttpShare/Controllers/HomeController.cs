@@ -1,4 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 
 namespace HttpShare.Controllers;
 
@@ -32,6 +36,27 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 
 		if (!sendSession) return NotFound();
 
-		return Ok(new { Message = "Not implemented yet!" });
+		byte[] zipData = [0];
+		MemoryStream memoryStream = new MemoryStream();
+
+		using (ZipArchive zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create))
+		{
+			ICollection<File> outboxFiles = (serverSession as ISendSession)!.OutboxFiles;
+
+			foreach (File file in outboxFiles)
+			{
+				using Stream fileStream = zipArchive.CreateEntry(file.Filename).Open();
+				fileStream.Write(file.Data);
+				fileStream.Flush();
+			}
+		}
+
+		zipData = memoryStream.ToArray();
+
+		memoryStream.Flush();
+		memoryStream.Dispose();
+
+		return File(zipData, "application/zip-compressed",
+			$"HttpShare_{DateTime.Now:yyyyMMdd_HHmmss}.zip");
 	}
 }
