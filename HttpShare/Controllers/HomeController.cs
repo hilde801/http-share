@@ -23,4 +23,15 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 
 		return View();
 	}
+
+	[HttpGet]
+	[Route("/Download/")]
+	public IActionResult Download()
+	{
+		bool sendSession = serverSession is ISendSession;
+
+		if (!sendSession) return NotFound();
+
+		return Ok(new { Message = "Not implemented yet!" });
+	}
 }
