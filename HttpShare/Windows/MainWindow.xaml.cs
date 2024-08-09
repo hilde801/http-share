@@ -26,8 +26,11 @@ public partial class MainWindow : Window
 
 		if (ParsedDataContext.IsServerRunning)
 		{
+			DualSession dualSession = new DualSession(outboxControl.OutboxFiles);
+
 			WebApplicationBuilder builder = WebApplication.CreateBuilder();
 			builder.Services.AddControllersWithViews();
+			builder.Services.AddSingleton<ServerSession>(dualSession);
 
 			WebApplication = builder.Build();
 			WebApplication.MapControllers();
