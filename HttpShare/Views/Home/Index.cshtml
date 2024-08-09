@@ -33,7 +33,7 @@
 @if (receiveSession)
 {
     <form enctype="multipart/form-data" method="post" action="/Upload/">
-        <input type="file" name="files" multiple="true" />
+        <input type="file" name="files" multiple required />
         <input type="submit" value="Upload!" />
     </form>
 }
