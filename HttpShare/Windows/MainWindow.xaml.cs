@@ -35,7 +35,8 @@ public partial class MainWindow : Window
 			WebApplication = builder.Build();
 			WebApplication.MapControllers();
 
-			WebApplication.Urls.Add("http://*:80");
+			WebApplication.Urls.Add("http://192.168.*:80");
+			WebApplication.Urls.Add("http://127.0.0.1:80");
 
 			await WebApplication.StartAsync();
 		}
