@@ -63,5 +63,25 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 
 	[HttpPost]
 	[Route("/Upload/")]
-	public void Upload([FromForm] ICollection<IFormFile> files) { }
+	public IActionResult Upload([FromForm] ICollection<IFormFile> files)
+	{
+		bool isReceiveSession = serverSession is IReceiveSession;
+		if (!isReceiveSession) return NotFound();
+
+		List<File> uploadFiles = [];
+
+		foreach (IFormFile file in files)
+		{
+			using MemoryStream fileStream = new MemoryStream();
+			file.CopyTo(fileStream);
+
+			uploadFiles.Add(new File(file.FileName, fileStream.ToArray()));
+
+			fileStream.Flush();
+		}
+
+		// TODO Add something here later
+
+		return Ok();
+	}
 }
