@@ -11,10 +11,8 @@
 {
     ICollection<File> outboxFiles = (ViewData["OutboxFiles"] as ICollection<File>)!;
 
-    if (outboxFiles.Count == 0)
+    if (outboxFiles.Count > 0)
     {
-        return;
-    }
 
         <ol>
             @foreach (File file in outboxFiles)
@@ -25,10 +23,17 @@
 
         <a href="/Download/">Download All</a>
     }
+}
 
 @if (sendSession && receiveSession)
 {
     <hr />
 }
 
-@* TODO Add more stuff here later *@
+@if (receiveSession)
+{
+    <form enctype="multipart/form-data" method="post" action="/Upload/">
+        <input type="file" name="files" multiple="true" />
+        <input type="submit" value="Upload!" />
+    </form>
+}

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -59,4 +60,8 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 		return File(zipData, "application/zip-compressed",
 			$"HttpShare_{DateTime.Now:yyyyMMdd_HHmmss}.zip");
 	}
+
+	[HttpPost]
+	[Route("/Upload/")]
+	public void Upload([FromForm] ICollection<IFormFile> files) { }
 }
