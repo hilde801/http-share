@@ -1,5 +1,6 @@
 using HttpShare.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.Windows;
@@ -31,6 +32,12 @@ public partial class MainWindow : Window
 			WebApplicationBuilder builder = WebApplication.CreateBuilder();
 			builder.Services.AddControllersWithViews();
 			builder.Services.AddSingleton<ServerSession>(dualSession);
+
+			builder.WebHost.ConfigureKestrel(options =>
+			{
+				options.Limits.MaxRequestBodySize = long.MaxValue;
+			});
+
 
 			WebApplication = builder.Build();
 			WebApplication.MapControllers();
