@@ -29,7 +29,8 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row="2" Padding="3">
+        <Button Grid.Row="2" Padding="3"
+                Click="OnClickDownloadAllButton">
             <TextBlock>Download All...</TextBlock>
         </Button>
     </Grid>
