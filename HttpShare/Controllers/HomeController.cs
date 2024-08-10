@@ -37,7 +37,6 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 
 		if (!sendSession) return NotFound();
 
-		byte[] zipData = [0];
 		MemoryStream memoryStream = new MemoryStream();
 
 		using (ZipArchive zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create))
@@ -52,7 +51,7 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 			}
 		}
 
-		zipData = memoryStream.ToArray();
+		byte[] zipData = memoryStream.ToArray();
 
 		memoryStream.Flush();
 		memoryStream.Dispose();
