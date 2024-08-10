@@ -1,7 +1,6 @@
 root = true
 
 [*]
-
 charset = utf-8
 indent_style = tab
 end_of_line = crlf
@@ -10,3 +9,13 @@ trim_trailing_whitespace = true
 
 [**/*.xaml]
 indent_style = space
+
+[*.cs]
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+dotnet_style_object_initializer = true
+dotnet_style_namespace_match_folder = true
+
+csharp_prefer_simple_using_statement = true
+csharp_space_after_cast = true
+csharp_style_namespace_declarations = file_scoped
