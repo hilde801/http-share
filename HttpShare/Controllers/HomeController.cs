@@ -1,3 +1,4 @@
+using HttpShare.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -60,22 +61,23 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 			$"HttpShare_{DateTime.Now:yyyyMMdd_HHmmss}.zip");
 	}
 
-	// TODO Convert the args for this route into a data model
 	[HttpPost]
 	[Route("/Upload/")]
-	public IActionResult Upload([FromForm] ICollection<IFormFile> files, [FromForm] string senderName)
+	public IActionResult Upload([FromForm] UploadDataModel uploadDataModel)
 	{
 		bool isReceiveSession = serverSession is IReceiveSession;
 		if (!isReceiveSession) return NotFound();
 
 		List<InboxFile> uploadFiles = [];
 
-		foreach (IFormFile file in files)
+		foreach (IFormFile file in uploadDataModel.Files)
 		{
 			using MemoryStream fileStream = new MemoryStream();
 			file.CopyTo(fileStream);
 
-			uploadFiles.Add(new InboxFile(senderName, file.FileName, fileStream.ToArray()));
+			InboxFile tempIndexFile = new InboxFile(uploadDataModel.DisplayName,
+				file.FileName, fileStream.ToArray());
+			uploadFiles.Add(tempIndexFile);
 
 			fileStream.Flush();
 		}

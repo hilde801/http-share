@@ -1,4 +1,9 @@
 @using HttpShare
+@using HttpShare.Models
+
+@model UploadDataModel
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     Layout = "../_Layout";
@@ -33,10 +38,10 @@
 @if (receiveSession)
 {
     <form enctype="multipart/form-data" method="post" action="/Upload/">
-        <label for="senderName">Your display name:</label>
-        <input type="text" id="senderName" name="senderName" required />
+        <label for="DisplayName">Your display name:</label>
+        <input type="text" asp-for="DisplayName" required />
 
-        <input type="file" name="files" multiple required />
+        <input type="file" asp-for="Files" multiple required />
 
         <input type="submit" value="Upload!" />
     </form>
