@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -58,5 +59,29 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 
 		return File(zipData, "application/zip-compressed",
 			$"HttpShare_{DateTime.Now:yyyyMMdd_HHmmss}.zip");
+	}
+
+	// TODO Convert the args for this route into a data model
+	[HttpPost]
+	[Route("/Upload/")]
+	public IActionResult Upload([FromForm] ICollection<IFormFile> files, [FromForm] string senderName)
+	{
+		bool isReceiveSession = serverSession is IReceiveSession;
+		if (!isReceiveSession) return NotFound();
+
+		List<InboxFile> uploadFiles = [];
+
+		foreach (IFormFile file in files)
+		{
+			using MemoryStream fileStream = new MemoryStream();
+			file.CopyTo(fileStream);
+
+			uploadFiles.Add(new InboxFile(senderName, file.FileName, fileStream.ToArray()));
+
+			fileStream.Flush();
+		}
+
+		(serverSession as IReceiveSession)!.InvokeReceivedFilesEvent(uploadFiles);
+		return Redirect("/");
 	}
 }

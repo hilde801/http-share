@@ -13,6 +13,7 @@
 
     if (outboxFiles.Count > 0)
     {
+
         <ol>
             @foreach (File file in outboxFiles)
             {
@@ -24,4 +25,19 @@
     }
 }
 
-@* TODO Add more stuff here later *@
+@if (sendSession && receiveSession)
+{
+    <hr />
+}
+
+@if (receiveSession)
+{
+    <form enctype="multipart/form-data" method="post" action="/Upload/">
+        <label for="senderName">Your display name:</label>
+        <input type="text" id="senderName" name="senderName" required />
+
+        <input type="file" name="files" multiple required />
+
+        <input type="submit" value="Upload!" />
+    </form>
+}

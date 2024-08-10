@@ -1,6 +1,13 @@
+using System.Collections.Generic;
+
 namespace HttpShare;
 
 public interface IReceiveSession
 {
-	// TODO Add something here later
+	public delegate void ReceivedFilesHandler(ICollection<InboxFile> files);
+
+	public event ReceivedFilesHandler? OnReceivedFiles;
+
+
+	public void InvokeReceivedFilesEvent(ICollection<InboxFile> files);
 }
