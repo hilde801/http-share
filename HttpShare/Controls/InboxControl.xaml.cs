@@ -25,6 +25,7 @@ public partial class InboxControl : UserControl
 		dispatcher.Invoke(() =>
 		{
 			foreach (InboxFile file in inboxFiles) ParsedDataContext.InboxFiles.Add(file);
+			ParsedDataContext.InvokePropertyChangedEvent();
 		});
 	}
 
