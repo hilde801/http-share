@@ -4,10 +4,10 @@ namespace HttpShare;
 
 public interface IReceiveSession
 {
-	public delegate void FileReceivedHandler(ICollection<InboxFile> files);
+	public delegate void ReceivedFilesHandler(ICollection<InboxFile> files);
 
-	public event FileReceivedHandler? FilesReceived;
+	public event ReceivedFilesHandler? OnReceivedFiles;
 
 
-	public void InvokeFilesReceived(ICollection<InboxFile> files);
+	public void InvokeReceivedFilesEvent(ICollection<InboxFile> files);
 }

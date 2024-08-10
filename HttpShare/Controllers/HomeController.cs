@@ -81,7 +81,7 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 			fileStream.Flush();
 		}
 
-		(serverSession as IReceiveSession)!.InvokeFilesReceived(uploadFiles);
+		(serverSession as IReceiveSession)!.InvokeReceivedFilesEvent(uploadFiles);
 		return Redirect("/");
 	}
 }
