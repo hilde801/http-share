@@ -7,11 +7,11 @@ public sealed class DualSession(ICollection<File> outboxFiles) : ServerSession,
 {
 	public ICollection<File> OutboxFiles => outboxFiles;
 
-	public event IReceiveSession.FileReceivedHandler? FileReceived;
+	public event IReceiveSession.FileReceivedHandler? FilesReceived;
 
 
-	public void InvokeFileReceived(ICollection<File> files)
+	public void InvokeFilesReceived(ICollection<File> files)
 	{
-		FileReceived?.Invoke(files);
+		FilesReceived?.Invoke(files);
 	}
 }

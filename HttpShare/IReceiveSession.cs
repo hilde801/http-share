@@ -6,8 +6,8 @@ public interface IReceiveSession
 {
 	public delegate void FileReceivedHandler(ICollection<File> files);
 
-	public event FileReceivedHandler? FileReceived;
+	public event FileReceivedHandler? FilesReceived;
 
 
-	public void InvokeFileReceived(ICollection<File> files);
+	public void InvokeFilesReceived(ICollection<File> files);
 }
