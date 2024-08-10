@@ -7,6 +7,10 @@
              xmlns:models="clr-namespace:HttpShare.Models"
              mc:Ignorable="d" d:Background="White"
              d:DesignHeight="300" d:DesignWidth="400">
+    <UserControl.DataContext>
+        <models:InboxControlDataContext />
+    </UserControl.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -14,7 +18,16 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" />
+        <DataGrid Grid.Row="0"
+                  AutoGenerateColumns="False"
+                  CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                  IsReadOnly="True" ItemsSource="{Binding InboxFiles, Mode=OneWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Filename" Binding="{Binding Filename}" />
+                <DataGridTextColumn Header="Sender" Binding="{Binding SenderName}" />
+                <DataGridTextColumn Header="Size" Binding="{Binding Size}" />
+            </DataGrid.Columns>
+        </DataGrid>
 
         <Button Grid.Row="2" Padding="3">
             <TextBlock>Download All...</TextBlock>

@@ -29,6 +29,8 @@ public partial class MainWindow : Window
 		{
 			DualSession dualSession = new DualSession(outboxControl.OutboxFiles);
 
+			dualSession.FilesReceived += DualSession_FilesReceived;
+
 			WebApplicationBuilder builder = WebApplication.CreateBuilder();
 			builder.Services.AddControllersWithViews();
 			builder.Services.AddSingleton<ServerSession>(dualSession);
@@ -49,6 +51,11 @@ public partial class MainWindow : Window
 		}
 
 		else await WebApplication.DisposeAsync();
+	}
+
+	private void DualSession_FilesReceived(System.Collections.Generic.ICollection<InboxFile> files)
+	{
+		inboxControl.AddInboxFiles(Dispatcher, files);
 	}
 
 	protected async override void OnClosing(CancelEventArgs e)
