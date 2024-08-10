@@ -7,7 +7,17 @@
              xmlns:models="clr-namespace:HttpShare.Models"
              mc:Ignorable="d" d:Background="White"
              d:DesignHeight="300" d:DesignWidth="400">
-    <StackPanel Orientation="Vertical">
-        <!-- TODO Add something here later -->
-    </StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" />
+
+        <Button Grid.Row="2" Padding="3">
+            <TextBlock>Download All...</TextBlock>
+        </Button>
+    </Grid>
 </UserControl>
