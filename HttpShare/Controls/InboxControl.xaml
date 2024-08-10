@@ -30,7 +30,8 @@
         </DataGrid>
 
         <Button Grid.Row="2" Padding="3"
-                Click="OnClickDownloadAllButton">
+                Click="OnClickDownloadAllButton"
+                IsEnabled="{Binding IsDownloadAllButtonEnabled, Mode=OneWay}">
             <TextBlock>Download All...</TextBlock>
         </Button>
     </Grid>
