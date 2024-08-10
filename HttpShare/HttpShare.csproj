@@ -1,9 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 	<PropertyGroup>
 		<OutputType>winexe</OutputType>
 		<TargetFramework>net8.0-windows7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<StartupObject>HttpShare.App</StartupObject>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 </Project>
