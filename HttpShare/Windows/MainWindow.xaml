@@ -16,6 +16,10 @@
             <TabItem Header="Outbox">
                 <controls:OutboxControl x:Name="outboxControl" />
             </TabItem>
+
+            <TabItem Header="Inbox">
+                <controls:InboxControl x:Name="inboxControl" />
+            </TabItem>
         </TabControl>
 
         <Button Margin="0,5,0,0" Padding="3"
