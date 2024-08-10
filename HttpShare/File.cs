@@ -2,7 +2,7 @@ using System.IO;
 
 namespace HttpShare;
 
-public sealed record File(string FilePath, byte[] Data)
+public record File(string FilePath, byte[] Data)
 {
 	public long Size => Data.LongLength;
 

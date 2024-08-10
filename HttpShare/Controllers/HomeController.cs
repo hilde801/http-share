@@ -61,26 +61,27 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 			$"HttpShare_{DateTime.Now:yyyyMMdd_HHmmss}.zip");
 	}
 
+	// TODO Convert the args for this route into a data model
 	[HttpPost]
 	[Route("/Upload/")]
-	public IActionResult Upload([FromForm] ICollection<IFormFile> files)
+	public IActionResult Upload([FromForm] ICollection<IFormFile> files, [FromForm] string senderName)
 	{
 		bool isReceiveSession = serverSession is IReceiveSession;
 		if (!isReceiveSession) return NotFound();
 
-		List<File> uploadFiles = [];
+		List<InboxFile> uploadFiles = [];
 
 		foreach (IFormFile file in files)
 		{
 			using MemoryStream fileStream = new MemoryStream();
 			file.CopyTo(fileStream);
 
-			uploadFiles.Add(new File(file.FileName, fileStream.ToArray()));
+			uploadFiles.Add(new InboxFile(senderName, file.FileName, fileStream.ToArray()));
 
 			fileStream.Flush();
 		}
 
-		(serverSession as IReceiveSession)!.InvokeFilesReceived(uploadFiles);
+		(serverSession as IReceiveSession)!.InvokeReceivedFilesEvent(uploadFiles);
 		return Redirect("/");
 	}
 }

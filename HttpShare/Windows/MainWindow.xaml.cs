@@ -2,6 +2,7 @@ using HttpShare.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
@@ -28,6 +29,7 @@ public partial class MainWindow : Window
 		if (ParsedDataContext.IsServerRunning)
 		{
 			DualSession dualSession = new DualSession(outboxControl.OutboxFiles);
+			dualSession.OnReceivedFiles += OnReceivedFiles;
 
 			WebApplicationBuilder builder = WebApplication.CreateBuilder();
 			builder.Services.AddControllersWithViews();
@@ -49,6 +51,11 @@ public partial class MainWindow : Window
 		}
 
 		else await WebApplication.DisposeAsync();
+	}
+
+	private void OnReceivedFiles(ICollection<InboxFile> files)
+	{
+		inboxControl.AddInboxFiles(Dispatcher, files);
 	}
 
 	protected async override void OnClosing(CancelEventArgs e)
