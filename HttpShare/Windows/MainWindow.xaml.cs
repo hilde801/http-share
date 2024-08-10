@@ -51,6 +51,9 @@ public partial class MainWindow : Window
 		}
 
 		else await WebApplication.DisposeAsync();
+
+		outboxControl.IsEnabled = !ParsedDataContext.IsServerRunning;
+
 	}
 
 	private void OnReceivedFiles(ICollection<InboxFile> files)
