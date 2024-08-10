@@ -1,9 +1,11 @@
-using HttpShare.Models;
-using Microsoft.Win32;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
+
+using HttpShare.Models;
+
+using Microsoft.Win32;
 
 using WindowsControls = System.Windows.Controls;
 
@@ -11,7 +13,7 @@ namespace HttpShare.Controls;
 
 public partial class OutboxControl : WindowsControls.UserControl
 {
-	private OutboxControlDataContext ParsedDataContext => (OutboxControlDataContext)DataContext;
+	private OutboxControlDataContext ParsedDataContext => (OutboxControlDataContext) DataContext;
 
 
 	public ICollection<File> OutboxFiles => ParsedDataContext.OutboxFiles;
@@ -25,7 +27,7 @@ public partial class OutboxControl : WindowsControls.UserControl
 
 	private void OnFileOkAddFilesDialog(object? sender, CancelEventArgs _)
 	{
-		OpenFileDialog addFilesDialog = (OpenFileDialog)sender!;
+		OpenFileDialog addFilesDialog = (OpenFileDialog) sender!;
 		Stream[] fileStreams = addFilesDialog.OpenFiles();
 
 		foreach (FileStream fileStream in fileStreams)

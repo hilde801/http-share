@@ -1,5 +1,3 @@
-using HttpShare.Models;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,11 +6,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
+using HttpShare.Models;
+
+using Microsoft.Win32;
+
 namespace HttpShare.Controls;
 
 public partial class InboxControl : UserControl
 {
-	private InboxControlDataContext ParsedDataContext => (InboxControlDataContext)DataContext;
+	private InboxControlDataContext ParsedDataContext => (InboxControlDataContext) DataContext;
 
 
 	public InboxControl()

@@ -1,16 +1,18 @@
-using HttpShare.Models;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
+
+using HttpShare.Models;
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HttpShare.Windows;
 
 public partial class MainWindow : Window
 {
-	private MainWindowDataContext ParsedDataContext => (MainWindowDataContext)DataContext;
+	private MainWindowDataContext ParsedDataContext => (MainWindowDataContext) DataContext;
 
 
 	private WebApplication WebApplication { get; set; } = null!;
