@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows;
 
 using HttpShare.Models;
+using HttpShare.Sessions;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

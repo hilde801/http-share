@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 
 using HttpShare.Models;
+using HttpShare.Sessions;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

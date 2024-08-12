@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace HttpShare;
+namespace HttpShare.Sessions;
 
 /// <summary>
 /// Describes a send session. 

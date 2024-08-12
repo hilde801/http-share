@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace HttpShare;
+namespace HttpShare.Sessions;
 
 /// <summary>
 /// Describes a server session that supports both sending and receiving files. 

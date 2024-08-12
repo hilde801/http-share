@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace HttpShare;
+namespace HttpShare.Sessions;
 
 /// <summary>
 /// Describes a receive session. 
@@ -23,9 +23,9 @@ public interface IReceiveSession
 	public event ReceivedFilesHandler? OnReceivedFiles;
 
 
-    /// <summary>
-    /// Used for handling receive file events.
-    /// </summary>
+	/// <summary>
+	/// Used for handling receive file events.
+	/// </summary>
 	/// <param name="files">A collection of <see cref="File"/>s received from the client.</param>
-    public void InvokeReceivedFilesEvent(ICollection<InboxFile> files);
+	public void InvokeReceivedFilesEvent(ICollection<InboxFile> files);
 }

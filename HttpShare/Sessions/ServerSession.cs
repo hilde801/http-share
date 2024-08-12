@@ -3,7 +3,7 @@
 
 using System;
 
-namespace HttpShare;
+namespace HttpShare.Sessions;
 
 /// <summary>
 /// This class is the base to describe server session classes.
