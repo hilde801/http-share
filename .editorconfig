@@ -17,7 +17,7 @@ dotnet_style_object_initializer = true
 dotnet_style_namespace_match_folder = true
 
 dotnet_diagnostic.CA1822.severity = none
-
+dotnet_diagnostic.IDE0058.severity = none
 
 csharp_prefer_simple_using_statement = true
 csharp_space_after_cast = true
