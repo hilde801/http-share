@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace HttpShare;
 
+/// <summary>
+/// Describes a server session that supports both sending and receiving files. 
+/// </summary>
 public sealed class DualSession(ICollection<File> outboxFiles) : ServerSession,
 	ISendSession, IReceiveSession
 {
