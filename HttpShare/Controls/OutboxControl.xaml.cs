@@ -14,20 +14,36 @@ using WindowsControls = System.Windows.Controls;
 
 namespace HttpShare.Controls;
 
+/// <summary>
+/// The code behind class for OutboxControl.
+/// </summary>
 public partial class OutboxControl : WindowsControls.UserControl
 {
+	/// <summary>
+	/// The data context object parsed to <see cref="OutboxControlDataContext"/>.
+	/// </summary>
 	private OutboxControlDataContext ParsedDataContext => (OutboxControlDataContext) DataContext;
 
 
+	/// <summary>
+	/// A collection of <see cref="File"/>s to be sent to the clients.
+	/// </summary>
 	public ICollection<File> OutboxFiles => ParsedDataContext.OutboxFiles;
 
 
+	/// <summary>
+	/// The class constructor.
+	/// </summary>
 	public OutboxControl()
 	{
 		InitializeComponent();
 	}
 
 
+	/// <summary>
+	/// Handles the add outbox files dialog on file OK event.
+	/// </summary>
+	/// <param name="sender">The sender object.</param>
 	private void OnFileOkAddFilesDialog(object? sender, CancelEventArgs _)
 	{
 		OpenFileDialog addFilesDialog = (OpenFileDialog) sender!;
@@ -50,6 +66,10 @@ public partial class OutboxControl : WindowsControls.UserControl
 		}
 	}
 
+	/// <summary>
+	/// Handles the "Add Files..." button on click event.
+	/// </summary>
+	/// <param name="sender">The sender object.</param>
 	private void OnClickAddFilesButton(object? sender, RoutedEventArgs _)
 	{
 		OpenFileDialog addFilesDialog = new OpenFileDialog
@@ -63,6 +83,10 @@ public partial class OutboxControl : WindowsControls.UserControl
 		addFilesDialog.ShowDialog();
 	}
 
+	/// <summary>
+	/// Handles the "Clear Outbox" button on click event.
+	/// </summary>
+	/// <param name="sender">The sender object.</param>
 	private void OnClickClearOutboxButton(object? sender, RoutedEventArgs _)
 	{
 		ParsedDataContext.OutboxFiles.Clear();
