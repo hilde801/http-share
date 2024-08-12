@@ -3,7 +3,13 @@
 
 namespace HttpShare;
 
+/// <summary>
+/// Represents a file sent from client devices.
+/// </summary>
+/// <param name="SenderName">The display name of the sender.</param>
+/// <param name="FileName">The name of the file.</param>
+/// <param name="Data">The contents of the file.</param>
 public record InboxFile(
 	string SenderName,
-	string FilePath,
-	byte[] Data) : File(FilePath, Data);
+	string FileName,
+	byte[] Data) : File(FileName, Data);

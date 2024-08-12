@@ -5,7 +5,13 @@ using System.Collections.Generic;
 
 namespace HttpShare;
 
+/// <summary>
+/// Describes a send session. 
+/// </summary>
 public interface ISendSession
 {
+	/// <summary>
+	/// A collection of <see cref="File"/>s to be sent to connected clients.
+	/// </summary>
 	public ICollection<File> OutboxFiles { get; }
 }
