@@ -29,7 +29,7 @@ Before building and/or running HTTP Share, you need to make sure that your machi
 
 1. Open `HttpShare.sln` with Visual Studio 2022
 2. Once the solution loaded, build the project with `Build` > `Build Solution`
-3. And to run the program, simply hit the _"green left-pointing triangular arrow"_ button
+3. And to run the program, click the _Run Program_ button on the top.
 
 ### Running/Building HTTP Share via the command line
 
