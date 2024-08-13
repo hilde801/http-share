@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:models="clr-namespace:HttpShare.Models"
         mc:Ignorable="d" Title="HTTP Share" ShowInTaskbar="False"
-		Width="300" SizeToContent="Height" ResizeMode="NoResize">
+		Width="300" SizeToContent="Height" ResizeMode="NoResize"
+		WindowStartupLocation="CenterScreen">
 	<Window.DataContext>
 		<models:ServerStartWindowDataContext />
 	</Window.DataContext>
