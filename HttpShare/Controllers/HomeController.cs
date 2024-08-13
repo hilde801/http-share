@@ -1,7 +1,5 @@
-// =============================================================================
 // Copyright 2024 Hilde801 (https://github.com/hilde801)
 // This file is a part of http-share
-// =============================================================================
 
 using System;
 using System.Collections.Generic;
@@ -9,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 
 using HttpShare.Models;
+using HttpShare.Sessions;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +15,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace HttpShare.Controllers;
 
 
+/// <summary>
+/// The default controller class.
+/// </summary>
+/// <param name="serverSession">The selected <see cref="ServerSession"/> object.</param>
 [Controller]
 [Route("/")]
 public sealed class HomeController(ServerSession serverSession) : Controller
 {
+	/// <summary>
+	/// Handles requests to address /.
+	/// </summary>
 	[HttpGet]
 	[Route("/")]
 	public IActionResult Index()
@@ -37,6 +43,10 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 		return View();
 	}
 
+
+	/// <summary>
+	/// Handles requests to address /Download/.
+	/// </summary>
 	[HttpGet]
 	[Route("/Download/")]
 	public IActionResult Download()
@@ -68,6 +78,9 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 			$"HttpShare_{DateTime.Now:yyyyMMdd_HHmmss}.zip");
 	}
 
+	/// <summary>
+	/// Handles requests to address /Upload/.
+	/// </summary>
 	[HttpPost]
 	[Route("/Upload/")]
 	public IActionResult Upload([FromForm] UploadDataModel uploadDataModel)

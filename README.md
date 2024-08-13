@@ -2,6 +2,8 @@
 
 HTTP Share is a simple Windows program to quickly share files via the HTTP protocol.
 
+<img src="./docs/screenshot_1.png" height="300" />
+
 ## How To Use HTTP Share
 
 1. You can add files to share to client devices by adding them to the list in the **Outbox** tab.
@@ -27,7 +29,7 @@ Before building and/or running HTTP Share, you need to make sure that your machi
 
 1. Open `HttpShare.sln` with Visual Studio 2022
 2. Once the solution loaded, build the project with `Build` > `Build Solution`
-3. And to run the program, simply hit the _"green left-pointing triangular arrow"_ button
+3. And to run the program, click the _Run Program_ button on the top.
 
 ### Running/Building HTTP Share via the command line
 
