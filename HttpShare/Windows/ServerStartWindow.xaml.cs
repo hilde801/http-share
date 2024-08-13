@@ -26,6 +26,17 @@ public partial class ServerStartWindow : Window
 	}
 
 
+	private void OnClickOkButton(object? sender, RoutedEventArgs _)
+	{
+		Close();
+	}
+
+	private void OnClickCopyToClipboardButton(object? sender, RoutedEventArgs _)
+	{
+		Clipboard.SetText(ParsedDataContext.ServerAddress);
+	}
+
+
 	private static bool CheckIfLocalAddress(IPAddress address)
 	{
 		byte[] bytes = address.GetAddressBytes();
