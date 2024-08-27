@@ -92,8 +92,7 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 			using MemoryStream fileStream = new MemoryStream();
 			file.CopyTo(fileStream);
 
-			InboxFile tempIndexFile = new InboxFile(uploadDataModel.DisplayName,
-				file.FileName, fileStream.ToArray());
+			InboxFile tempIndexFile = new InboxFile(uploadDataModel.DisplayName, file.FileName, fileStream.ToArray());
 			uploadFiles.Add(tempIndexFile);
 
 			fileStream.Flush();

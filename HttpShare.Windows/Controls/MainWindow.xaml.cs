@@ -69,6 +69,7 @@ public partial class MainWindow : Window
 			WebApplication.Urls.Add("http://127.0.0.1:80");*/
 
 			DualModeServer = new DualModeServer(80, outboxControl.OutboxFiles);
+			DualModeServer.ReceiveFile += OnReceivedFiles;
 
 			ServerStartWindow serverStartWindow = new ServerStartWindow { Owner = this };
 			serverStartWindow.Show();
