@@ -21,12 +21,6 @@ public partial class MainWindow : Window
 	private MainWindowDataContext ParsedDataContext => (MainWindowDataContext) DataContext;
 
 
-	/// <summary>
-	/// The web application property.
-	/// </summary>
-	// private WebApplication WebApplication { get; set; } = null!;
-
-
 	private DualModeServer? DualModeServer { get; set; } = null;
 
 
@@ -49,25 +43,6 @@ public partial class MainWindow : Window
 
 		if (ParsedDataContext.IsServerRunning)
 		{
-			/*DualSession dualSession = new DualSession(outboxControl.OutboxFiles);
-			dualSession.OnReceivedFiles += OnReceivedFiles;
-
-			WebApplicationBuilder builder = WebApplication.CreateBuilder();
-			builder.Services.AddControllersWithViews();
-			builder.Services.AddSingleton<ServerSession>(dualSession);
-
-			builder.WebHost.ConfigureKestrel(options =>
-			{
-				options.Limits.MaxRequestBodySize = long.MaxValue;
-			});
-
-
-			WebApplication = builder.Build();
-			WebApplication.MapControllers();
-
-			WebApplication.Urls.Add("http://192.168.*:80");
-			WebApplication.Urls.Add("http://127.0.0.1:80");*/
-
 			DualModeServer = new DualModeServer(80, outboxControl.OutboxFiles);
 			DualModeServer.ReceiveFile += OnReceivedFiles;
 
@@ -77,7 +52,7 @@ public partial class MainWindow : Window
 			await DualModeServer!.StartAsync();
 		}
 
-		else await DualModeServer!.StartAsync();
+		else await DualModeServer!.DisposeAsync();
 
 		outboxControl.IsEnabled = !ParsedDataContext.IsServerRunning;
 

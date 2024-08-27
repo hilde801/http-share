@@ -26,7 +26,7 @@
                   CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"
                   IsReadOnly="True" ItemsSource="{Binding InboxFiles, Mode=OneWay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Filename" Binding="{Binding Filename}" />
+                <DataGridTextColumn Header="Filename" Binding="{Binding FileName}" />
                 <DataGridTextColumn Header="Sender" Binding="{Binding SenderName}" />
                 <DataGridTextColumn Header="Size" Binding="{Binding Size}" />
             </DataGrid.Columns>
