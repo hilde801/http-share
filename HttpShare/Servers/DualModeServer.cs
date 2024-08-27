@@ -3,6 +3,7 @@ using HttpShare.Sessions;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace HttpShare.Servers;
 
@@ -18,10 +19,9 @@ public sealed class DualModeServer : IAsyncDisposable
 		WebApplicationBuilder builder = WebApplication.CreateBuilder();
 
 		builder.Services.AddControllersWithViews()
-			.AddApplicationPart(typeof(HomeController).Assembly)
-			.AddControllersAsServices();
+			.AddApplicationPart(typeof(HomeController).Assembly);
 
-		builder.Services.AddSingleton(dualSession);
+		builder.Services.AddSingleton<ServerSession>(dualSession);
 
 		App = builder.Build();
 		App.MapControllers();
@@ -31,7 +31,7 @@ public sealed class DualModeServer : IAsyncDisposable
 	}
 
 
-	public Task StartAsync() => App.StartAsync();
+	public Task StartAsync() => App.RunAsync();
 
 	public ValueTask DisposeAsync() => App.DisposeAsync();
 }

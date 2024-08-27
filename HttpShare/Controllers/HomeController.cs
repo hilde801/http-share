@@ -16,7 +16,7 @@ namespace HttpShare.Controllers;
 /// The default controller class.
 /// </summary>
 /// <param name="serverSession">The selected <see cref="ServerSession"/> object.</param>
-[Controller]
+[ApiController]
 [Route("/")]
 public sealed class HomeController(ServerSession serverSession) : Controller
 {
