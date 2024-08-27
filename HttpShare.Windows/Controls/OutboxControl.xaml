@@ -33,7 +33,7 @@
                   CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"
                   IsReadOnly="True" ItemsSource="{Binding OutboxFiles, Mode=OneWay}">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="Filename" Binding="{Binding Filename}"
+				<DataGridTextColumn Header="Filename" Binding="{Binding FileName}"
 									Width="200" MinWidth="200" />
 
 				<DataGridTextColumn Header="Path" Binding="{Binding FilePath}"
