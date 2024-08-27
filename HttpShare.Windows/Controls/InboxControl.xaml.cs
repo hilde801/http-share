@@ -78,7 +78,7 @@ public partial class InboxControl : UserControl
 		{
 			foreach (InboxFile file in ParsedDataContext.InboxFiles)
 			{
-				string destination = Path.Combine(selectedFolder, file.Filename);
+				string destination = Path.Combine(selectedFolder, file.FileName);
 				using FileStream fileStream = System.IO.File.OpenWrite(destination);
 
 				fileStream.Write(file.Data);

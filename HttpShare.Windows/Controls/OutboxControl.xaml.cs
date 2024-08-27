@@ -28,7 +28,7 @@ public partial class OutboxControl : WindowsControls.UserControl
 	/// <summary>
 	/// A collection of <see cref="File"/>s to be sent to the clients.
 	/// </summary>
-	public ICollection<File> OutboxFiles => ParsedDataContext.OutboxFiles;
+	public ICollection<OutboxFile> OutboxFiles => ParsedDataContext.OutboxFiles;
 
 
 	/// <summary>
@@ -62,7 +62,7 @@ public partial class OutboxControl : WindowsControls.UserControl
 
 			fileStream.Dispose();
 
-			ParsedDataContext.OutboxFiles.Add(new File(path, data));
+			ParsedDataContext.OutboxFiles.Add(new OutboxFile(path, data));
 		}
 	}
 
