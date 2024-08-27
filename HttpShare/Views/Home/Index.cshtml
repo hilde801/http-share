@@ -17,15 +17,15 @@
 
 @if (sendSession)
 {
-    ICollection<File> outboxFiles = (ViewData["OutboxFiles"] as ICollection<File>)!;
+    ICollection<OutboxFile> outboxFiles = (ViewData["OutboxFiles"] as ICollection<OutboxFile>)!;
 
     if (outboxFiles.Count > 0)
     {
 
         <ol>
-            @foreach (File file in outboxFiles)
+            @foreach (OutboxFile file in outboxFiles)
             {
-                <li>@file.Filename</li>
+                <li>@file.FileName</li>
             }
         </ol>
 

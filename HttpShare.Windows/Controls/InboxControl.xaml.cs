@@ -9,11 +9,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-using HttpShare.Models;
+using HttpShare.Windows.Models;
 
 using Microsoft.Win32;
 
-namespace HttpShare.Controls;
+namespace HttpShare.Windows.Controls;
 
 /// <summary>
 /// The code behind class for InboxControl.
@@ -78,7 +78,7 @@ public partial class InboxControl : UserControl
 		{
 			foreach (InboxFile file in ParsedDataContext.InboxFiles)
 			{
-				string destination = Path.Combine(selectedFolder, file.Filename);
+				string destination = Path.Combine(selectedFolder, file.FileName);
 				using FileStream fileStream = System.IO.File.OpenWrite(destination);
 
 				fileStream.Write(file.Data);

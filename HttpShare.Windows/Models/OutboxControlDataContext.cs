@@ -4,7 +4,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace HttpShare.Models;
+namespace HttpShare.Windows.Models;
 
 
 /// <summary>
@@ -18,7 +18,7 @@ public sealed class OutboxControlDataContext : INotifyPropertyChanged
 	/// <summary>
 	/// A collection of <see cref="File"/>s to be sent to connected clients.
 	/// </summary>
-	public ObservableCollection<File> OutboxFiles { get; } = [];
+	public ObservableCollection<OutboxFile> OutboxFiles { get; } = [];
 
 
 	/// <summary>

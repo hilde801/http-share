@@ -5,14 +5,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
-using HttpShare.Models;
-using HttpShare.Sessions;
+using HttpShare.Servers;
+using HttpShare.Windows.Models;
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace HttpShare.Windows;
+namespace HttpShare.Windows.Controls;
 
 /// <summary>
 /// The code-behind class for the main application window.
@@ -28,7 +24,10 @@ public partial class MainWindow : Window
 	/// <summary>
 	/// The web application property.
 	/// </summary>
-	private WebApplication WebApplication { get; set; } = null!;
+	// private WebApplication WebApplication { get; set; } = null!;
+
+
+	private DualModeServer? DualModeServer { get; set; } = null;
 
 
 	/// <summary>
@@ -50,7 +49,7 @@ public partial class MainWindow : Window
 
 		if (ParsedDataContext.IsServerRunning)
 		{
-			DualSession dualSession = new DualSession(outboxControl.OutboxFiles);
+			/*DualSession dualSession = new DualSession(outboxControl.OutboxFiles);
 			dualSession.OnReceivedFiles += OnReceivedFiles;
 
 			WebApplicationBuilder builder = WebApplication.CreateBuilder();
@@ -67,15 +66,17 @@ public partial class MainWindow : Window
 			WebApplication.MapControllers();
 
 			WebApplication.Urls.Add("http://192.168.*:80");
-			WebApplication.Urls.Add("http://127.0.0.1:80");
+			WebApplication.Urls.Add("http://127.0.0.1:80");*/
+
+			DualModeServer = new DualModeServer(80, outboxControl.OutboxFiles);
 
 			ServerStartWindow serverStartWindow = new ServerStartWindow { Owner = this };
 			serverStartWindow.Show();
 
-			await WebApplication.StartAsync();
+			await DualModeServer!.StartAsync();
 		}
 
-		else await WebApplication.DisposeAsync();
+		else await DualModeServer!.StartAsync();
 
 		outboxControl.IsEnabled = !ParsedDataContext.IsServerRunning;
 
@@ -95,7 +96,11 @@ public partial class MainWindow : Window
 	/// </summary>
 	protected async override void OnClosing(CancelEventArgs e)
 	{
-		if (ParsedDataContext.IsServerRunning) await WebApplication.DisposeAsync();
+		if (ParsedDataContext.IsServerRunning && DualModeServer != null)
+		{
+			await DualModeServer.DisposeAsync();
+		}
+
 		base.OnClosing(e);
 	}
 }
