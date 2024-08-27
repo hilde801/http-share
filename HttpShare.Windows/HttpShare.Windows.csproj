@@ -3,14 +3,13 @@
 <!-- This file is a part of http-share -->
 <!-- ======================================================================= -->
 
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>winexe</OutputType>
 		<TargetFramework>net8.0-windows7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<StartupObject>HttpShare.App</StartupObject>
-		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -29,6 +28,5 @@
 
 	<ItemGroup>
 		<ProjectReference Include="$(SolutionDir)HttpShare/HttpShare.csproj" />
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 </Project>
