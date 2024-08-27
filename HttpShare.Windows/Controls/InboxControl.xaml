@@ -10,32 +10,37 @@
              xmlns:models="clr-namespace:HttpShare.Windows.Models"
              mc:Ignorable="d" d:Background="White"
              d:DesignHeight="300" d:DesignWidth="400">
-    <UserControl.DataContext>
-        <models:InboxControlDataContext />
-    </UserControl.DataContext>
+	<UserControl.DataContext>
+		<models:InboxControlDataContext />
+	</UserControl.DataContext>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="5" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="5" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0"
+		<DataGrid Grid.Row="0"
                   AutoGenerateColumns="False"
                   CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"
                   IsReadOnly="True" ItemsSource="{Binding InboxFiles, Mode=OneWay}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Filename" Binding="{Binding FileName}" />
-                <DataGridTextColumn Header="Sender" Binding="{Binding SenderName}" />
-                <DataGridTextColumn Header="Size" Binding="{Binding Size}" />
-            </DataGrid.Columns>
-        </DataGrid>
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Filename" Binding="{Binding FileName}"
+									Width="200" MinWidth="200" />
 
-        <Button Grid.Row="2" Padding="3"
+				<DataGridTextColumn Header="Sender" Binding="{Binding SenderName}"
+									Width="150" MinWidth="150" />
+
+				<DataGridTextColumn Header="Size" Binding="{Binding Size}"
+									Width="100" MinWidth="100" />
+			</DataGrid.Columns>
+		</DataGrid>
+
+		<Button Grid.Row="2" Padding="3"
                 Click="OnClickDownloadAllButton"
                 IsEnabled="{Binding IsDownloadAllButtonEnabled, Mode=OneWay}">
-            <TextBlock>Download All...</TextBlock>
-        </Button>
-    </Grid>
+			<TextBlock>Download All...</TextBlock>
+		</Button>
+	</Grid>
 </UserControl>
