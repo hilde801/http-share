@@ -1,0 +1,51 @@
+@* Copyright 2024 Hilde801 (https://github.com/hilde801) *@
+@* This file is a part of http-share *@
+
+@using HttpShare
+@using HttpShare.Models
+
+@model UploadDataModel
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "../_Layout";
+
+    bool sendSession = (bool)ViewData["SendSession"]!;
+    bool receiveSession = (bool)ViewData["ReceiveSession"]!;
+}
+
+@if (sendSession)
+{
+    ICollection<File> outboxFiles = (ViewData["OutboxFiles"] as ICollection<File>)!;
+
+    if (outboxFiles.Count > 0)
+    {
+
+        <ol>
+            @foreach (File file in outboxFiles)
+            {
+                <li>@file.Filename</li>
+            }
+        </ol>
+
+        <a href="/Download/">Download All</a>
+    }
+}
+
+@if (sendSession && receiveSession)
+{
+    <hr />
+}
+
+@if (receiveSession)
+{
+    <form enctype="multipart/form-data" method="post" action="/Upload/">
+        <label for="DisplayName">Your display name:</label>
+        <input type="text" asp-for="DisplayName" required />
+
+        <input type="file" asp-for="Files" multiple required />
+
+        <input type="submit" value="Upload!" />
+    </form>
+}
