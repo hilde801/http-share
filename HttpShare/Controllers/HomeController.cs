@@ -1,9 +1,6 @@
 // Copyright 2024 Hilde801 (https://github.com/hilde801)
 // This file is a part of http-share
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.IO.Compression;
 
 using HttpShare.Models;
@@ -59,11 +56,11 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 
 		using (ZipArchive zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create))
 		{
-			ICollection<File> outboxFiles = (serverSession as ISendSession)!.OutboxFiles;
+			ICollection<OutboxFile> outboxFiles = (serverSession as ISendSession)!.OutboxFiles;
 
-			foreach (File file in outboxFiles)
+			foreach (OutboxFile file in outboxFiles)
 			{
-				using Stream fileStream = zipArchive.CreateEntry(file.Filename).Open();
+				using Stream fileStream = zipArchive.CreateEntry(file.FileName).Open();
 				fileStream.Write(file.Data);
 				fileStream.Flush();
 			}
