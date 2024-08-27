@@ -5,4 +5,4 @@
 - [ ] Add server port input
 - [ ] Add "Simple Mode" window.
 - [ ] Add application icon.
-- [ ] Add localisations.
+- [ ] Add localisations for English (more locales will be added in the future).
