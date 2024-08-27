@@ -3,10 +3,12 @@
 
 using System.ComponentModel;
 
-namespace HttpShare.Models;
+using HttpShare.Windows.Controls;
+
+namespace HttpShare.Windows.Models;
 
 /// <summary>
-/// The data context class for <see cref="Windows.MainWindow"/>. 
+/// The data context class for <see cref="MainWindow"/>. 
 /// </summary>
 public sealed class MainWindowDataContext : INotifyPropertyChanged
 {

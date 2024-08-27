@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
-using HttpShare.Models;
 using HttpShare.Servers;
+using HttpShare.Windows.Models;
 
-namespace HttpShare.Windows;
+namespace HttpShare.Windows.Controls;
 
 /// <summary>
 /// The code-behind class for the main application window.

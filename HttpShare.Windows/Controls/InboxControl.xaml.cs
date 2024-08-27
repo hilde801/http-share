@@ -9,11 +9,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-using HttpShare.Models;
+using HttpShare.Windows.Models;
 
 using Microsoft.Win32;
 
-namespace HttpShare.Controls;
+namespace HttpShare.Windows.Controls;
 
 /// <summary>
 /// The code behind class for InboxControl.

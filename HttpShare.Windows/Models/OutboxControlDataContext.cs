@@ -4,7 +4,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace HttpShare.Models;
+namespace HttpShare.Windows.Models;
 
 
 /// <summary>

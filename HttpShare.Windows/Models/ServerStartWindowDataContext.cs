@@ -4,10 +4,12 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace HttpShare.Models;
+using HttpShare.Windows.Controls;
+
+namespace HttpShare.Windows.Models;
 
 /// <summary>
-/// The data context class for <see cref="Windows.ServerStartWindow" />
+/// The data context class for <see cref="ServerStartWindow" />
 /// </summary>
 public sealed class ServerStartWindowDataContext : INotifyPropertyChanged
 {

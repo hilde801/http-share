@@ -5,19 +5,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 
-using HttpShare.Models;
+using HttpShare.Windows.Models;
 
 using Microsoft.Win32;
 
-using WindowsControls = System.Windows.Controls;
-
-namespace HttpShare.Controls;
+namespace HttpShare.Windows.Controls;
 
 /// <summary>
 /// The code behind class for OutboxControl.
 /// </summary>
-public partial class OutboxControl : WindowsControls.UserControl
+public partial class OutboxControl : UserControl
 {
 	/// <summary>
 	/// The data context object parsed to <see cref="OutboxControlDataContext"/>.

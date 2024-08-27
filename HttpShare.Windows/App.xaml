@@ -1,7 +1,7 @@
 <!-- Copyright 2024 Hilde801 (https://github.com/hilde801) -->
 <!-- This file is a part of http-share -->
 
-<Application x:Class="HttpShare.App"
+<Application x:Class="HttpShare.Windows.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="/Windows/MainWindow.xaml" />
+             StartupUri="/Controls/MainWindow.xaml" />
