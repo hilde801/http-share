@@ -1,0 +1,33 @@
+<!-- ======================================================================= -->
+<!-- Copyright 2024 Hilde801 (https://github.com/hilde801) -->
+<!-- This file is a part of http-share -->
+<!-- ======================================================================= -->
+
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+	<PropertyGroup>
+		<OutputType>winexe</OutputType>
+		<TargetFramework>net8.0-windows7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<StartupObject>HttpShare.App</StartupObject>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<ProductName>HTTP Share</ProductName>
+		<Authors>Hilde801</Authors>
+		<Company>$(Authors)</Company>
+		<Version>0.0.0.0</Version>
+		<FileVersion>$(Version)</FileVersion>
+		<ProductVersion>$(Version)</ProductVersion>
+		<Copyright>Copyright © 2024 $(Authors)</Copyright>
+		<NeutralLanguage>en</NeutralLanguage>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<Title>$(ProductName)</Title>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+</Project>
