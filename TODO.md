@@ -4,5 +4,5 @@
 - [ ] Add server password protection.
 - [ ] Add server port input
 - [ ] Add "Simple Mode" window.
-- [ ] Add application icon.
+- [X] Add application icon.
 - [ ] Add localisations for English (more locales will be added in the future).
