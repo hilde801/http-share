@@ -10,6 +10,7 @@
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<StartupObject>HttpShare.Windows.App</StartupObject>
+		<ApplicationIcon>Icon.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -27,6 +28,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="$(ProjectDir)Icon.ico" />
 		<ProjectReference Include="$(SolutionDir)HttpShare/HttpShare.csproj" />
 	</ItemGroup>
 </Project>
