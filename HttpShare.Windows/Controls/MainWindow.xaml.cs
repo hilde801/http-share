@@ -21,6 +21,9 @@ public partial class MainWindow : Window
 	private MainWindowDataContext ParsedDataContext => (MainWindowDataContext) DataContext;
 
 
+	/// <summary>
+	/// The instance of <see cref="DualModeServer"/>.
+	/// </summary>
 	private DualModeServer? DualModeServer { get; set; } = null;
 
 

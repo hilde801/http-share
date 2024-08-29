@@ -9,11 +9,21 @@ namespace HttpShare.Sessions;
 public sealed class DualSession(ICollection<OutboxFile> outboxFiles) : ServerSession,
 	ISendSession, IReceiveSession
 {
+	/// <summary>
+	///  A collection of files to the sent to client devices.
+	/// </summary>
 	public ICollection<OutboxFile> OutboxFiles => outboxFiles;
 
+	/// <summary>
+	/// The implementation of <see cref="IReceiveSession.OnReceivedFiles"/>.
+	/// </summary>
 	public event IReceiveSession.ReceivedFilesHandler? OnReceivedFiles;
 
 
+	/// <summary>
+	/// Invokes <see cref="OnReceivedFiles"/>.
+	/// </summary>
+	/// <param name="files">Files received from client devices.</param>
 	public void InvokeReceivedFilesEvent(ICollection<InboxFile> files)
 	{
 		OnReceivedFiles?.Invoke(files);
