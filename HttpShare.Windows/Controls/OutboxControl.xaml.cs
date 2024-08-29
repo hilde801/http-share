@@ -5,19 +5,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 
-using HttpShare.Models;
+using HttpShare.Windows.Models;
 
 using Microsoft.Win32;
 
-using WindowsControls = System.Windows.Controls;
-
-namespace HttpShare.Controls;
+namespace HttpShare.Windows.Controls;
 
 /// <summary>
 /// The code behind class for OutboxControl.
 /// </summary>
-public partial class OutboxControl : WindowsControls.UserControl
+public partial class OutboxControl : UserControl
 {
 	/// <summary>
 	/// The data context object parsed to <see cref="OutboxControlDataContext"/>.
@@ -28,7 +27,7 @@ public partial class OutboxControl : WindowsControls.UserControl
 	/// <summary>
 	/// A collection of <see cref="File"/>s to be sent to the clients.
 	/// </summary>
-	public ICollection<File> OutboxFiles => ParsedDataContext.OutboxFiles;
+	public ICollection<OutboxFile> OutboxFiles => ParsedDataContext.OutboxFiles;
 
 
 	/// <summary>
@@ -62,7 +61,7 @@ public partial class OutboxControl : WindowsControls.UserControl
 
 			fileStream.Dispose();
 
-			ParsedDataContext.OutboxFiles.Add(new File(path, data));
+			ParsedDataContext.OutboxFiles.Add(new OutboxFile(path, data));
 		}
 	}
 

@@ -1,8 +1,6 @@
 // Copyright 2024 Hilde801 (https://github.com/hilde801)
 // This file is a part of http-share
 
-using System.Collections.Generic;
-
 namespace HttpShare.Sessions;
 
 /// <summary>
@@ -13,7 +11,7 @@ public interface IReceiveSession
 	/// <summary>
 	/// Used as a delegate for <see cref="OnReceivedFiles"/>.
 	/// </summary>
-	/// <param name="files">A collection of <see cref="File"/>s received from the client.</param>
+	/// <param name="files">A collection of <see cref="OutboxFile"/>s received from the client.</param>
 	public delegate void ReceivedFilesHandler(ICollection<InboxFile> files);
 
 
@@ -26,6 +24,6 @@ public interface IReceiveSession
 	/// <summary>
 	/// Used for handling receive file events.
 	/// </summary>
-	/// <param name="files">A collection of <see cref="File"/>s received from the client.</param>
+	/// <param name="files">A collection of <see cref="OutboxFile"/>s received from the client.</param>
 	public void InvokeReceivedFilesEvent(ICollection<InboxFile> files);
 }

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 
-using HttpShare.Models;
+using HttpShare.Windows.Models;
 
-namespace HttpShare.Windows;
+namespace HttpShare.Windows.Controls;
 
 /// <summary>
 /// The code-behind class for the server start notification dialog.

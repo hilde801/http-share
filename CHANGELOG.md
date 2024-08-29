@@ -1,3 +1,9 @@
+## Prototype 2
+
+- Project file rearrangements
+- Set column widths for the inbox and outbox tables
+- Added application icon
+
 ## Prototype 1
 
 - Some code rearrangements
