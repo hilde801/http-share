@@ -7,3 +7,5 @@
 - [ ] Add icons to important controls.
 - [ ] Add a project website.
 - [ ] Overhaul project documentation (e.g. [README.md](./README.md) and in-file documentations).
+- [ ] Add an "About" control.
+- [ ] Add an "Exception/Error" window (just in case).
