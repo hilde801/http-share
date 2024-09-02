@@ -4,7 +4,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace HttpShare.Windows.Models;
+namespace HttpShare.Windows.DataContexts;
 
 /// <summary>
 /// The data context class for <see cref="Controls.InboxControl"/>.

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 using HttpShare.Windows.Controls;
 
-namespace HttpShare.Windows.Models;
+namespace HttpShare.Windows.DataContexts;
 
 /// <summary>
 /// The data context class for <see cref="ServerStartWindow" />
