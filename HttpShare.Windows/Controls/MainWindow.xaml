@@ -7,11 +7,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:HttpShare.Windows.Controls"
-        xmlns:models="clr-namespace:HttpShare.Windows.Models"
+        xmlns:dataContexts="clr-namespace:HttpShare.Windows.DataContexts"
         mc:Ignorable="d" Title="HTTP Share"
         Width="600" SizeToContent="Height" ResizeMode="NoResize">
 	<Window.DataContext>
-		<models:MainWindowDataContext />
+		<dataContexts:MainWindowDataContext />
 	</Window.DataContext>
 
 	<StackPanel Orientation="Vertical" Margin="10">

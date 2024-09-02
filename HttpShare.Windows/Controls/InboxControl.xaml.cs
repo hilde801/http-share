@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-using HttpShare.Windows.Models;
+using HttpShare.Windows.DataContexts;
 
 using Microsoft.Win32;
 

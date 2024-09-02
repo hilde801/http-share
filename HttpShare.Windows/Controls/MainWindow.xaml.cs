@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Windows;
 
 using HttpShare.Servers;
-using HttpShare.Windows.Models;
+using HttpShare.Windows.DataContexts;
 
 namespace HttpShare.Windows.Controls;
 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 
-using HttpShare.Windows.Models;
+using HttpShare.Windows.DataContexts;
 
 namespace HttpShare.Windows.Controls;
 

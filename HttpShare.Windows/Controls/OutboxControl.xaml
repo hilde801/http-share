@@ -7,11 +7,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:HttpShare.Windows.Controls"
-             xmlns:models="clr-namespace:HttpShare.Windows.Models"
+             xmlns:dataContexts="clr-namespace:HttpShare.Windows.DataContexts"
              mc:Ignorable="d" d:Background="White"
              d:DesignHeight="300" d:DesignWidth="400">
 	<UserControl.DataContext>
-		<models:OutboxControlDataContext />
+		<dataContexts:OutboxControlDataContext />
 	</UserControl.DataContext>
 
 	<Grid>
