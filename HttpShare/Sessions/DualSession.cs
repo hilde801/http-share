@@ -1,18 +1,20 @@
 // Copyright 2024 Hilde801 (https://github.com/hilde801)
 // This file is a part of http-share
 
+using HttpShare.Files;
+
 namespace HttpShare.Sessions;
 
 /// <summary>
 /// Describes a server session that supports both sending and receiving files. 
 /// </summary>
-public sealed class DualSession(ICollection<OutboxFile> outboxFiles) : ServerSession,
+public sealed class DualSession(ICollection<IOutboxFile> outboxFiles) : ServerSession,
 	ISendSession, IReceiveSession
 {
 	/// <summary>
 	///  A collection of files to the sent to client devices.
 	/// </summary>
-	public ICollection<OutboxFile> OutboxFiles => outboxFiles;
+	public ICollection<IOutboxFile> OutboxFiles => outboxFiles;
 
 	/// <summary>
 	/// The implementation of <see cref="IReceiveSession.OnReceivedFiles"/>.

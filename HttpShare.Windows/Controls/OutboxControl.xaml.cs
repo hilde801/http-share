@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
+using HttpShare.Files;
 using HttpShare.Windows.DataContexts;
 
 using Microsoft.Win32;
@@ -27,7 +28,7 @@ public partial class OutboxControl : UserControl
 	/// <summary>
 	/// A collection of <see cref="File"/>s to be sent to the clients.
 	/// </summary>
-	public ICollection<OutboxFile> OutboxFiles => ParsedDataContext.OutboxFiles;
+	public ICollection<IOutboxFile> OutboxFiles => ParsedDataContext.OutboxFiles;
 
 
 	/// <summary>
@@ -61,7 +62,8 @@ public partial class OutboxControl : UserControl
 
 			fileStream.Dispose();
 
-			ParsedDataContext.OutboxFiles.Add(new OutboxFile(path, data));
+			// TODO Fix this later
+			// ParsedDataContext.OutboxFiles.Add(new OutboxFile(path, data));
 		}
 	}
 
