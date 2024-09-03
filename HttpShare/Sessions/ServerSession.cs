@@ -16,4 +16,7 @@ public abstract class ServerSession
 	/// The host's display name in the "(hostname)/(username)" format.
 	/// </returns>
 	public string HostName => $"{Environment.MachineName}/{Environment.UserName}";
+
+
+	public string? Password { get; set; } = null;
 }
