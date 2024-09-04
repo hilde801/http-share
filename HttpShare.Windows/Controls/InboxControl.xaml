@@ -29,11 +29,12 @@
 				<DataGridTemplateColumn Width="30" CanUserResize="False">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<CheckBox HorizontalAlignment="Center" />
+							<CheckBox HorizontalAlignment="Center"
+									  IsChecked="{Binding IsSelected, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
-				
+
 				<DataGridTextColumn Header="Filename" Binding="{Binding Name}"
 									Width="200" MinWidth="200" />
 
