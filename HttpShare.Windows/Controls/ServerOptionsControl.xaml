@@ -9,8 +9,50 @@
              xmlns:local="clr-namespace:HttpShare.Windows.Controls"
              xmlns:dataContexts="clr-namespace:HttpShare.Windows.DataContexts"
              mc:Ignorable="d" d:Background="White"
-             d:DesignWidth="600" d:DesignHeight="450">
+             d:DesignWidth="400" d:DesignHeight="300">
 	<Grid Margin="3">
-		<!-- TODO Add something here later -->
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" MinWidth="50" />
+			<ColumnDefinition Width="10" />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="10" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="5" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="5" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="10" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+
+		<!-- Port input -->
+		<TextBlock Grid.Column="0" Grid.Row="0"
+				   VerticalAlignment="Center" Text="Port:" />
+
+		<TextBox Grid.Column="2" Grid.Row="0" Padding="3" />
+
+
+		<!-- Password inputs -->
+		<CheckBox Grid.Column="2" Grid.Row="2" Content="Enable password protection" />
+
+		<TextBlock Grid.Column="0" Grid.Row="4"
+				   VerticalAlignment="Center" Text="Password:" />
+
+		<PasswordBox Grid.Column="2" Grid.Row="4" Padding="3" PasswordChar="●" />
+
+		<TextBlock Grid.Column="0" Grid.Row="6"
+				   VerticalAlignment="Center" Text="Password confirm:" />
+
+		<PasswordBox Grid.Column="2" Grid.Row="6" Padding="3" PasswordChar="●" />
+
+
+		<!-- Error list -->
+		<TextBlock Grid.Column="0" Grid.Row="8" Text="Errors:" />
+
+		<ListView Grid.Column="2" Grid.Row="8" />
 	</Grid>
 </UserControl>

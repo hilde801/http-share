@@ -16,6 +16,10 @@
 
 	<StackPanel Orientation="Vertical" Margin="10">
 		<TabControl Height="400">
+			<TabItem Header="Server Options">
+				<controls:ServerOptionsControl />
+			</TabItem>
+
 			<TabItem Header="Outbox">
 				<controls:OutboxControl x:Name="outboxControl" />
 			</TabItem>
