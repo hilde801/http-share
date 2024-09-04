@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
+using HttpShare.Files;
 using HttpShare.Servers;
 using HttpShare.Windows.DataContexts;
 
@@ -64,10 +65,10 @@ public partial class MainWindow : Window
 	/// <summary>
 	/// The handler method for file received event.
 	/// </summary>
-	/// <param name="files">The received <see cref="InboxFile"/> collection object.</param>
-	private void OnReceivedFiles(IEnumerable<InboxFile> files)
+	/// <param name="files">The received <see cref="IInboxFile"/> collection object.</param>
+	private void OnReceivedFiles(IEnumerable<IInboxFile> files)
 	{
-		inboxControl.AddInboxFiles(Dispatcher, files);
+		inboxControl.AddIInboxFiles(Dispatcher, files);
 	}
 
 	/// <summary>
