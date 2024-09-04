@@ -32,6 +32,7 @@
 				  CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"
                   AutoGenerateColumns="False" ItemsSource="{Binding OutboxFiles, Mode=OneWay}">
 			<DataGrid.Columns>
+				<!-- TODO Uncomment this column when needed.
 				<DataGridTemplateColumn Width="30" CanUserResize="False" IsReadOnly="False">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
@@ -39,7 +40,7 @@
 									  IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
+				</DataGridTemplateColumn> -->
 
 				<DataGridTextColumn Header="Filename" Binding="{Binding Name}"
 									Width="200" MinWidth="200" IsReadOnly="True" />
