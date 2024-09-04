@@ -10,6 +10,10 @@
              xmlns:dataContexts="clr-namespace:HttpShare.Windows.DataContexts"
              mc:Ignorable="d" d:Background="White"
              d:DesignWidth="400" d:DesignHeight="300">
+	<UserControl.DataContext>
+		<dataContexts:ServerOptionsControlDataContext />
+	</UserControl.DataContext>
+	
 	<Grid Margin="3">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" MinWidth="50" />
