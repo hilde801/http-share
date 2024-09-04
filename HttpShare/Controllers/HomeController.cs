@@ -86,7 +86,7 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 		bool isReceiveSession = serverSession is IReceiveSession;
 		if (!isReceiveSession) return NotFound();
 
-		List<InboxFile> uploadFiles = [];
+		List<IInboxFile> uploadFiles = [];
 
 		foreach (IFormFile file in uploadDataModel.Files)
 		{

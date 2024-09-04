@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
+using HttpShare.Files;
 using HttpShare.Windows.DataContexts;
 
 using Microsoft.Win32;
@@ -39,12 +40,12 @@ public partial class InboxControl : UserControl
 	/// Updates the inbox files list.
 	/// </summary>
 	/// <param name="dispatcher">The control <see cref="Dispatcher"/> object.</param>
-	/// <param name="inboxFiles">The current inbox file collection.</param>
-	public void AddInboxFiles(Dispatcher dispatcher, IEnumerable<InboxFile> inboxFiles)
+	/// <param name="IInboxFiles">The current inbox file collection.</param>
+	public void AddIInboxFiles(Dispatcher dispatcher, IEnumerable<IInboxFile> IInboxFiles)
 	{
 		dispatcher.Invoke(() =>
 		{
-			foreach (InboxFile file in inboxFiles) ParsedDataContext.InboxFiles.Add(file);
+			foreach (IInboxFile file in IInboxFiles) ParsedDataContext.IInboxFiles.Add(file);
 			ParsedDataContext.InvokePropertyChangedEvent();
 		});
 	}
@@ -72,14 +73,19 @@ public partial class InboxControl : UserControl
 	/// <param name="sender">The sender object.</param>
 	private void OnFolderOkOpenFolderDialog(object? sender, CancelEventArgs _)
 	{
-		string selectedFolder = (sender as OpenFolderDialog)!.FolderName;
+		DateTime now = DateTime.UtcNow;
+
+		string selectedFolder = (sender as OpenFolderDialog)!.FolderName,
+			rootFolder = Path.Combine(selectedFolder, $"{nameof(HttpShare)}_{now.Ticks}");
+
+		Directory.CreateDirectory(rootFolder);
 
 		try
 		{
-			foreach (InboxFile file in ParsedDataContext.InboxFiles)
+			foreach (IInboxFile file in ParsedDataContext.IInboxFiles)
 			{
-				string destination = Path.Combine(selectedFolder, file.FileName);
-				using FileStream fileStream = System.IO.File.OpenWrite(destination);
+				string destination = Path.Combine(rootFolder, file.Name);
+				using FileStream fileStream = File.OpenWrite(destination);
 
 				fileStream.Write(file.Data);
 				fileStream.Flush();

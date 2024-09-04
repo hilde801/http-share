@@ -20,7 +20,7 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// The delegate of <see cref="ReceiveFile"/> handler. 
 	/// </summary>
 	/// <param name="inboxFiles"></param>
-	public delegate void ReceiveFilesHandler(ICollection<InboxFile> inboxFiles);
+	public delegate void ReceiveFilesHandler(ICollection<IInboxFile> inboxFiles);
 
 	/// <summary>
 	/// Invoked when the the server receive files from client devices. 
@@ -78,5 +78,5 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// Invoke <see cref="ReceiveFile"/>.
 	/// </summary>
 	/// <param name="inboxFiles">A collection of files received from the client.</param>
-	private void HandleReceivedFiles(ICollection<InboxFile> inboxFiles) => ReceiveFile?.Invoke(inboxFiles);
+	private void HandleReceivedFiles(ICollection<IInboxFile> inboxFiles) => ReceiveFile?.Invoke(inboxFiles);
 }
