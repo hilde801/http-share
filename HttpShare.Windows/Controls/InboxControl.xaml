@@ -26,6 +26,14 @@
                   CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"
                   IsReadOnly="True" ItemsSource="{Binding IInboxFiles, Mode=OneWay}">
 			<DataGrid.Columns>
+				<DataGridTemplateColumn Width="30" CanUserResize="False">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<CheckBox HorizontalAlignment="Center" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				
 				<DataGridTextColumn Header="Filename" Binding="{Binding Name}"
 									Width="200" MinWidth="200" />
 
