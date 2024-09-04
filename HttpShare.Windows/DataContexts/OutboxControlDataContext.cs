@@ -20,7 +20,7 @@ public sealed class OutboxControlDataContext : INotifyPropertyChanged
 	/// <summary>
 	/// A collection of <see cref="File"/>s to be sent to connected clients.
 	/// </summary>
-	public ObservableCollection<IOutboxFileListItem> OutboxFiles { get; } = [];
+	public ObservableCollection<OutboxFileListItem> OutboxFiles { get; } = [];
 
 
 	/// <summary>

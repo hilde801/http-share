@@ -53,7 +53,7 @@ public partial class OutboxControl : UserControl
 
 		foreach (FileStream fileStream in fileStreams.Cast<FileStream>())
 		{
-			ParsedDataContext.OutboxFiles.Add(OutboxFile.Load(fileStream).ToOutboxFileListItem());
+			ParsedDataContext.OutboxFiles.Add((OutboxFileListItem) OutboxFileListItem.Load(fileStream));
 		}
 	}
 
