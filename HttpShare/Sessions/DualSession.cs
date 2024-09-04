@@ -8,13 +8,13 @@ namespace HttpShare.Sessions;
 /// <summary>
 /// Describes a server session that supports both sending and receiving files. 
 /// </summary>
-public sealed class DualSession(ICollection<IOutboxFile> outboxFiles) : ServerSession,
+public sealed class DualSession(IEnumerable<IOutboxFile> outboxFiles) : ServerSession,
 	ISendSession, IReceiveSession
 {
 	/// <summary>
 	///  A collection of files to the sent to client devices.
 	/// </summary>
-	public ICollection<IOutboxFile> OutboxFiles => outboxFiles;
+	public IEnumerable<IOutboxFile> OutboxFiles => outboxFiles;
 
 	/// <summary>
 	/// The implementation of <see cref="IReceiveSession.OnReceivedFiles"/>.

@@ -30,10 +30,7 @@ public partial class OutboxControl : UserControl
 	/// <summary>
 	/// A collection of <see cref="File"/>s to be sent to the clients.
 	/// </summary>
-	public ICollection<IOutboxFile> OutboxFiles
-	{
-		get => (ICollection<IOutboxFile>) ParsedDataContext.OutboxFiles.Cast<IOutboxFile>();
-	}
+	public IEnumerable<IOutboxFile> OutboxFiles => ParsedDataContext.OutboxFiles.Cast<IOutboxFile>();
 
 
 	/// <summary>

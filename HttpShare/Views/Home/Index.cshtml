@@ -18,11 +18,10 @@
 
 @if (sendSession)
 {
-    ICollection<IOutboxFile> outboxFiles = (ViewData["OutboxFiles"] as ICollection<IOutboxFile>)!;
+    IEnumerable<IOutboxFile> outboxFiles = (ViewData["OutboxFiles"] as IEnumerable<IOutboxFile>)!;
 
-    if (outboxFiles.Count > 0)
+    if (outboxFiles.Count() > 0)
     {
-
         <ol>
             @foreach (IOutboxFile file in outboxFiles)
             {

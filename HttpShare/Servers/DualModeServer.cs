@@ -38,7 +38,7 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// </summary>
 	/// <param name="port">The port to be used.</param>
 	/// <param name="outboxFiles">A collection of files to be sent to client devices.</param>
-	public DualModeServer(int port, ICollection<IOutboxFile> outboxFiles)
+	public DualModeServer(int port, IEnumerable<IOutboxFile> outboxFiles)
 	{
 		DualSession dualSession = new DualSession(outboxFiles);
 		dualSession.OnReceivedFiles += HandleReceivedFiles;

@@ -40,7 +40,7 @@ public partial class InboxControl : UserControl
 	/// </summary>
 	/// <param name="dispatcher">The control <see cref="Dispatcher"/> object.</param>
 	/// <param name="inboxFiles">The current inbox file collection.</param>
-	public void AddInboxFiles(Dispatcher dispatcher, ICollection<InboxFile> inboxFiles)
+	public void AddInboxFiles(Dispatcher dispatcher, IEnumerable<InboxFile> inboxFiles)
 	{
 		dispatcher.Invoke(() =>
 		{

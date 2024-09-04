@@ -57,7 +57,7 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 
 		using (ZipArchive zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create))
 		{
-			ICollection<IOutboxFile> outboxFiles = (serverSession as ISendSession)!.OutboxFiles;
+			IEnumerable<IOutboxFile> outboxFiles = (serverSession as ISendSession)!.OutboxFiles;
 
 			foreach (IOutboxFile file in outboxFiles)
 			{

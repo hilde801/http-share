@@ -13,5 +13,5 @@ public interface ISendSession
 	/// <summary>
 	/// A collection of <see cref="OutboxFile"/>s to be sent to connected clients.
 	/// </summary>
-	public ICollection<IOutboxFile> OutboxFiles { get; }
+	public IEnumerable<IOutboxFile> OutboxFiles { get; }
 }

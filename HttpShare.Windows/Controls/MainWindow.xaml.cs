@@ -65,7 +65,7 @@ public partial class MainWindow : Window
 	/// The handler method for file received event.
 	/// </summary>
 	/// <param name="files">The received <see cref="InboxFile"/> collection object.</param>
-	private void OnReceivedFiles(ICollection<InboxFile> files)
+	private void OnReceivedFiles(IEnumerable<InboxFile> files)
 	{
 		inboxControl.AddInboxFiles(Dispatcher, files);
 	}

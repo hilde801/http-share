@@ -4,7 +4,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-using HttpShare.Files;
 using HttpShare.Windows.Files;
 
 namespace HttpShare.Windows.DataContexts;
