@@ -11,6 +11,7 @@ using System.Windows.Threading;
 
 using HttpShare.Files;
 using HttpShare.Windows.DataContexts;
+using HttpShare.Windows.Files;
 
 using Microsoft.Win32;
 
@@ -45,7 +46,12 @@ public partial class InboxControl : UserControl
 	{
 		dispatcher.Invoke(() =>
 		{
-			foreach (IInboxFile file in IInboxFiles) ParsedDataContext.IInboxFiles.Add(file);
+			foreach (IInboxFile file in IInboxFiles)
+			{
+				InboxFileListItem item = new InboxFileListItem(file.SenderName, file.Name, file.Data);
+				ParsedDataContext.IInboxFiles.Add(item);
+			}
+
 			ParsedDataContext.InvokePropertyChangedEvent();
 		});
 	}

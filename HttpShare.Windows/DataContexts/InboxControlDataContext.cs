@@ -4,7 +4,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-using HttpShare.Files;
+using HttpShare.Windows.Files;
 
 namespace HttpShare.Windows.DataContexts;
 
@@ -28,7 +28,7 @@ public sealed class InboxControlDataContext : INotifyPropertyChanged
 	/// <summary>
 	/// A collection of incoming files for the "Inbox" tab list.
 	/// </summary>
-	public ObservableCollection<IInboxFile> IInboxFiles { get; } = [];
+	public ObservableCollection<InboxFileListItem> IInboxFiles { get; } = [];
 
 	/// <summary>
 	/// Represents whether the "Download All..." button is enabled or not.
