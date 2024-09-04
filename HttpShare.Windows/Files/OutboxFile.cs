@@ -4,7 +4,7 @@ using HttpShare.Files;
 
 namespace HttpShare.Windows.Files;
 
-internal class OutboxFile(string filePath, byte[] data) : IOutboxFile
+public class OutboxFile(string filePath, byte[] data) : IOutboxFile
 {
 	public string FilePath => filePath;
 
