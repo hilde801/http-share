@@ -58,6 +58,12 @@
 		<!-- Error list -->
 		<TextBlock Grid.Column="0" Grid.Row="8" Text="Errors:" />
 
-		<ListView Grid.Column="2" Grid.Row="8" />
+		<DataGrid Grid.Column="2" Grid.Row="8" ItemsSource="{Binding Errors, Mode=OneWay}"
+				  IsReadOnly="True" AutoGenerateColumns="False">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Input" Binding="{Binding Input}" MinWidth="100" />
+				<DataGridTextColumn Header="Message" Binding="{Binding Message}" MinWidth="200"/>
+			</DataGrid.Columns>
+		</DataGrid>
 	</Grid>
 </UserControl>
