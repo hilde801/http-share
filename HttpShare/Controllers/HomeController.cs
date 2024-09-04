@@ -3,6 +3,7 @@
 
 using System.IO.Compression;
 
+using HttpShare.Files;
 using HttpShare.Models;
 using HttpShare.Sessions;
 
@@ -56,11 +57,11 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 
 		using (ZipArchive zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create))
 		{
-			ICollection<OutboxFile> outboxFiles = (serverSession as ISendSession)!.OutboxFiles;
+			ICollection<IOutboxFile> outboxFiles = (serverSession as ISendSession)!.OutboxFiles;
 
-			foreach (OutboxFile file in outboxFiles)
+			foreach (IOutboxFile file in outboxFiles)
 			{
-				using Stream fileStream = zipArchive.CreateEntry(file.FileName).Open();
+				using Stream fileStream = zipArchive.CreateEntry(file.Name).Open();
 				fileStream.Write(file.Data);
 				fileStream.Flush();
 			}
