@@ -29,12 +29,17 @@
 		</Grid.RowDefinitions>
 
 		<DataGrid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"
-                  AutoGenerateColumns="False"
-                  CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                  ItemsSource="{Binding OutboxFiles, Mode=OneWay}">
+				  CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                  AutoGenerateColumns="False" ItemsSource="{Binding OutboxFiles, Mode=OneWay}">
 			<DataGrid.Columns>
-				<DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay}"
-										Width="30" CanUserResize="False" IsReadOnly="False" />
+				<DataGridTemplateColumn Width="30" CanUserResize="False" IsReadOnly="False">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<CheckBox HorizontalAlignment="Center"
+									  IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
 
 				<DataGridTextColumn Header="Filename" Binding="{Binding Name}"
 									Width="200" MinWidth="200" IsReadOnly="True" />
