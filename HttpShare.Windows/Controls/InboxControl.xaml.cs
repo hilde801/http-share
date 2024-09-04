@@ -73,13 +73,18 @@ public partial class InboxControl : UserControl
 	/// <param name="sender">The sender object.</param>
 	private void OnFolderOkOpenFolderDialog(object? sender, CancelEventArgs _)
 	{
-		string selectedFolder = (sender as OpenFolderDialog)!.FolderName;
+		DateTime now = DateTime.UtcNow;
+
+		string selectedFolder = (sender as OpenFolderDialog)!.FolderName,
+			rootFolder = Path.Combine(selectedFolder, $"{nameof(HttpShare)}_{now.Ticks}");
+
+		Directory.CreateDirectory(rootFolder);
 
 		try
 		{
 			foreach (IInboxFile file in ParsedDataContext.IInboxFiles)
 			{
-				string destination = Path.Combine(selectedFolder, file.Name);
+				string destination = Path.Combine(rootFolder, file.Name);
 				using FileStream fileStream = File.OpenWrite(destination);
 
 				fileStream.Write(file.Data);
