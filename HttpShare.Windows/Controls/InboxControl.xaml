@@ -26,13 +26,13 @@
                   CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"
                   IsReadOnly="True" ItemsSource="{Binding IInboxFiles, Mode=OneWay}">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="Filename" Binding="{Binding FileName}"
+				<DataGridTextColumn Header="Filename" Binding="{Binding Name}"
 									Width="200" MinWidth="200" />
 
 				<DataGridTextColumn Header="Sender" Binding="{Binding SenderName}"
 									Width="150" MinWidth="150" />
 
-				<DataGridTextColumn Header="Size" Binding="{Binding Size}"
+				<DataGridTextColumn Header="Size" Binding="{Binding Length}"
 									Width="100" MinWidth="100" />
 			</DataGrid.Columns>
 		</DataGrid>

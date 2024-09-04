@@ -9,12 +9,10 @@ namespace HttpShare.Files;
 /// <param name="SenderName">The display name of the sender.</param>
 /// <param name="FileName">The name of the file.</param>
 /// <param name="Data">The contents of the file.</param>
-internal record InboxFile(string SenderName, string FileName, byte[] Data) : IInboxFile
+internal record InboxFile(string SenderName, string Name, byte[] Data) : IInboxFile
 {
 	/// <summary>
 	/// The size of the file in bytes.
 	/// </summary>
 	public long Length => Data.LongLength;
-
-	public string Name => throw new NotImplementedException();
 }
