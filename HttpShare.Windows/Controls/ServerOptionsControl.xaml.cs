@@ -1,6 +1,7 @@
 // Copyright 2024 Hilde801 (https://github.com/hilde801)
 // This file is a part of http-share
 
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -32,7 +33,7 @@ public partial class ServerOptionsControl : UserControl
 	public IServerOptions ServerOptions => ParsedDataContext;
 
 
-	public interface IServerOptions
+	public interface IServerOptions : INotifyPropertyChanged
 	{
 		public int Port { get; }
 

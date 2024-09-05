@@ -34,6 +34,13 @@ public partial class MainWindow : Window
 	public MainWindow()
 	{
 		InitializeComponent();
+
+		serverOptionsControl.ServerOptions.PropertyChanged += OnChangeServerOptions;
+	}
+
+	private void OnChangeServerOptions(object? sender, PropertyChangedEventArgs e)
+	{
+		ParsedDataContext.EnableServerToggleButton = !serverOptionsControl.ServerOptions.HasErrors;
 	}
 
 

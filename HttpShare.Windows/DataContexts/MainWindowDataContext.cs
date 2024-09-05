@@ -41,4 +41,17 @@ public sealed class MainWindowDataContext : INotifyPropertyChanged
 	/// </summary>
 	public string ServerToggleButtonText => IsServerRunning ? "Stop Server" : "Start Server";
 
+
+	private bool enableServerToggleButton = true;
+
+	public bool EnableServerToggleButton
+	{
+		get => enableServerToggleButton;
+
+		set
+		{
+			enableServerToggleButton = value;
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EnableServerToggleButton)));
+		}
+	}
 }

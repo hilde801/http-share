@@ -104,13 +104,13 @@ public sealed class ServerOptionsControlDataContext : INotifyPropertyChanged, ID
 			errors.Add(new KeyValuePair<string, string>(nameof(PortInput), errorMessage));
 		}
 
-		if (Password.Length < 6)
+		if (EnablePassword && Password.Length < 6)
 		{
 			string errorMessage = "The password must be 6 characters or longer.";
 			errors.Add(new KeyValuePair<string, string>(nameof(Password), errorMessage));
 		}
 
-		if (Password != PasswordConfirm)
+		if (EnablePassword && Password != PasswordConfirm)
 		{
 			string errorMessage = "Passwords does not match.";
 			errors.Add(new KeyValuePair<string, string>(nameof(PasswordConfirm), errorMessage));
