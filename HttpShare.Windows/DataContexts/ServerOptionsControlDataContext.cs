@@ -45,6 +45,20 @@ public sealed class ServerOptionsControlDataContext : INotifyPropertyChanged, ID
 	}
 
 
+	private bool enablePassword = false;
+
+	public bool EnablePassword
+	{
+		get => enablePassword;
+
+		set
+		{
+			enablePassword = value;
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
+		}
+	}
+
+
 	private void ValidateInputs(object? sender, PropertyChangedEventArgs args)
 	{
 		if (!string.IsNullOrEmpty(args.PropertyName) || !string.IsNullOrWhiteSpace(args.PropertyName))

@@ -42,17 +42,20 @@
 
 
 		<!-- Password inputs -->
-		<CheckBox Grid.Column="2" Grid.Row="2" Content="Enable password protection" />
+		<CheckBox Grid.Column="2" Grid.Row="2" Content="Enable password protection"
+				  IsChecked="{Binding EnablePassword, Mode=TwoWay}" />
 
 		<TextBlock Grid.Column="0" Grid.Row="4"
 				   VerticalAlignment="Center" Text="Password:" />
 
-		<PasswordBox Grid.Column="2" Grid.Row="4" Padding="3" PasswordChar="●" />
+		<PasswordBox Grid.Column="2" Grid.Row="4" Padding="3" PasswordChar="●"
+				   IsEnabled="{Binding EnablePassword, Mode=OneWay}" />
 
 		<TextBlock Grid.Column="0" Grid.Row="6"
 				   VerticalAlignment="Center" Text="Password confirm:" />
 
-		<PasswordBox Grid.Column="2" Grid.Row="6" Padding="3" PasswordChar="●" />
+		<PasswordBox Grid.Column="2" Grid.Row="6" Padding="3" PasswordChar="●"
+				   IsEnabled="{Binding EnablePassword, Mode=OneWay}" />
 
 
 		<!-- Error list -->
