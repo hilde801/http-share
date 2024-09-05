@@ -50,11 +50,16 @@ public partial class MainWindow : Window
 	/// <param name="sender">The sender object.</param>
 	private async void OnClickServerToggleButton(object? sender, RoutedEventArgs _)
 	{
+		ServerOptionsControl.IServerOptions serverOptions = serverOptionsControl.ServerOptions;
+
 		ParsedDataContext.IsServerRunning = !ParsedDataContext.IsServerRunning;
 
 		if (ParsedDataContext.IsServerRunning)
 		{
-			DualModeServer = new DualModeServer(80, outboxControl.OutboxFiles);
+			DualModeServer = new DualModeServer(serverOptions.Port,
+				outboxControl.OutboxFiles,
+				serverOptions.EnablePassword ? serverOptions.Password : null);
+
 			DualModeServer.ReceiveFile += OnReceivedFiles;
 
 			ServerStartWindow serverStartWindow = new ServerStartWindow { Owner = this };
