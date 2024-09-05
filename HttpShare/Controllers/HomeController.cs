@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HttpShare.Controllers;
 
-
 /// <summary>
 /// The default controller class.
 /// </summary>
@@ -103,3 +102,5 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 		return Redirect("/");
 	}
 }
+
+// TODO Add implementation of the password system in this controller later
