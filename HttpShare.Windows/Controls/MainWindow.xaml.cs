@@ -62,7 +62,7 @@ public partial class MainWindow : Window
 
 			DualModeServer.ReceiveFile += OnReceivedFiles;
 
-			ServerStartWindow serverStartWindow = new ServerStartWindow { Owner = this };
+			ServerStartWindow serverStartWindow = new ServerStartWindow(serverOptions.Port) { Owner = this };
 			serverStartWindow.Show();
 
 			await DualModeServer!.StartAsync();

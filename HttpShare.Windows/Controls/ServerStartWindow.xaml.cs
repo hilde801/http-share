@@ -21,11 +21,16 @@ public partial class ServerStartWindow : Window
 	private ServerStartWindowDataContext ParsedDataContext => (ServerStartWindowDataContext) DataContext;
 
 
+	private readonly int port = 80;
+
+
 	/// <summary>
 	/// The class constructor.
 	/// </summary>
-	public ServerStartWindow()
+	public ServerStartWindow(int port)
 	{
+		this.port = port;
+
 		InitializeComponent();
 	}
 
@@ -35,7 +40,7 @@ public partial class ServerStartWindow : Window
 	/// </summary>
 	protected override void OnInitialized(EventArgs e)
 	{
-		ParsedDataContext.ServerAddress = GetServerAddress();
+		ParsedDataContext.ServerAddress = GetServerAddress(port);
 
 		base.OnInitialized(e);
 	}
@@ -75,12 +80,12 @@ public partial class ServerStartWindow : Window
 	/// Gets all local <see cref="IPAddress"/>es.
 	/// </summary>
 	/// <returns>The URI string of the first local address fetched.</returns>
-	public static string GetServerAddress()
+	public static string GetServerAddress(int port)
 	{
 		IPAddress[] ipAddresses = Dns.GetHostAddresses(Dns.GetHostName())
 			.Where(CheckIfLocalAddress)
 			.ToArray();
 
-		return $"http://{ipAddresses[0]}:80";
+		return $"http://{ipAddresses[0]}:{port}";
 	}
 }

@@ -44,4 +44,18 @@ public sealed class ServerStartWindowDataContext : INotifyPropertyChanged
 	{
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
+
+
+	public int port = 80;
+
+	public int Port
+	{
+		get => port;
+
+		set
+		{
+			port = value;
+			InvokePropertyChangedEvent();
+		}
+	}
 }
