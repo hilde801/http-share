@@ -45,6 +45,8 @@ public sealed class ServerOptionsControlDataContext : INotifyPropertyChanged, ID
 	}
 
 
+	private string password = string.Empty, passwordConfirm = string.Empty;
+
 	private bool enablePassword = false;
 
 	public bool EnablePassword
@@ -54,6 +56,28 @@ public sealed class ServerOptionsControlDataContext : INotifyPropertyChanged, ID
 		set
 		{
 			enablePassword = value;
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
+		}
+	}
+
+	public string Password
+	{
+		get => password;
+
+		set
+		{
+			password = value;
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
+		}
+	}
+
+	public string PasswordConfirm
+	{
+		get => passwordConfirm;
+
+		set
+		{
+			passwordConfirm = value;
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
 		}
 	}
@@ -78,7 +102,17 @@ public sealed class ServerOptionsControlDataContext : INotifyPropertyChanged, ID
 			errors.Add(new KeyValuePair<string, string>(nameof(PortInput), errorMessage));
 		}
 
-		// TODO Add something here later
+		if (Password.Length < 6)
+		{
+			string errorMessage = "The password must be 6 characters or longer.";
+			errors.Add(new KeyValuePair<string, string>(nameof(Password), errorMessage));
+		}
+
+		if (Password != PasswordConfirm)
+		{
+			string errorMessage = "Passwords does not match.";
+			errors.Add(new KeyValuePair<string, string>(nameof(PasswordConfirm), errorMessage));
+		}
 
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Errors)));
 	}

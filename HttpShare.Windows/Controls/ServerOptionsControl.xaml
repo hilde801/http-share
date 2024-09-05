@@ -49,13 +49,15 @@
 				   VerticalAlignment="Center" Text="Password:" />
 
 		<PasswordBox Grid.Column="2" Grid.Row="4" Padding="3" PasswordChar="●"
-				   IsEnabled="{Binding EnablePassword, Mode=OneWay}" />
+					 IsEnabled="{Binding EnablePassword, Mode=OneWay}"
+					 PasswordChanged="OnPasswordChangedPasswordInput" />
 
 		<TextBlock Grid.Column="0" Grid.Row="6"
 				   VerticalAlignment="Center" Text="Password confirm:" />
 
 		<PasswordBox Grid.Column="2" Grid.Row="6" Padding="3" PasswordChar="●"
-				   IsEnabled="{Binding EnablePassword, Mode=OneWay}" />
+					 IsEnabled="{Binding EnablePassword, Mode=OneWay}"
+					 PasswordChanged="OnPasswordChangedPasswordConfirmInput" />
 
 
 		<!-- Error list -->
