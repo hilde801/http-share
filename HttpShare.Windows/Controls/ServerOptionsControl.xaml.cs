@@ -27,4 +27,21 @@ public partial class ServerOptionsControl : UserControl
 	{
 		ParsedDataContext.PasswordConfirm = (sender as PasswordBox)!.Password;
 	}
+
+
+	public IServerOptions ServerOptions => ParsedDataContext;
+
+
+	public interface IServerOptions
+	{
+		public int Port { get; }
+
+		public string Password { get; }
+
+		public string PasswordConfirm { get; }
+
+		public bool EnablePassword { get; }
+
+		public bool HasErrors { get; }
+	}
 }

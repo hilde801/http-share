@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
+using HttpShare.Windows.Controls;
+
 namespace HttpShare.Windows.DataContexts;
 
-public sealed class ServerOptionsControlDataContext : INotifyPropertyChanged, IDataErrorInfo
+public sealed class ServerOptionsControlDataContext : INotifyPropertyChanged, IDataErrorInfo, ServerOptionsControl.IServerOptions
 {
 	public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -121,4 +123,6 @@ public sealed class ServerOptionsControlDataContext : INotifyPropertyChanged, ID
 	public record ErrorItem(string Input, string Message);
 
 	public IEnumerable<ErrorItem> Errors => errors.Select(item => new ErrorItem(item.Key, item.Value));
+
+	public bool HasErrors => errors.Count > 0;
 }
