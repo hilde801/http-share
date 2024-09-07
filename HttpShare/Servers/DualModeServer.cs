@@ -7,6 +7,7 @@ using HttpShare.Sessions;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HttpShare.Servers;
@@ -48,8 +49,7 @@ public sealed class DualModeServer : IAsyncDisposable
 		builder.Services.AddControllersWithViews()
 			.AddApplicationPart(typeof(HomeController).Assembly);
 
-		builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = long.MaxValue);
-
+		builder.WebHost.ConfigureKestrel(ConfigureKestrel);
 		builder.Services.AddSingleton<ServerSession>(dualSession);
 
 
@@ -79,4 +79,10 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// </summary>
 	/// <param name="inboxFiles">A collection of files received from the client.</param>
 	private void HandleReceivedFiles(ICollection<IInboxFile> inboxFiles) => ReceiveFile?.Invoke(inboxFiles);
+
+
+	private void ConfigureKestrel(KestrelServerOptions options)
+	{
+		options.Limits.MaxRequestBodySize = long.MaxValue;
+	}
 }
