@@ -54,6 +54,8 @@ public partial class MainWindow : Window
 
 		ParsedDataContext.IsServerRunning = !ParsedDataContext.IsServerRunning;
 
+		serverOptionsControl.IsEnabled = !serverOptionsControl.IsEnabled;
+
 		if (ParsedDataContext.IsServerRunning)
 		{
 			DualModeServer = new DualModeServer(serverOptions.Port,
