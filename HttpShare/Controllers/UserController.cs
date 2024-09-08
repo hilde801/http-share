@@ -8,6 +8,8 @@ namespace HttpShare.Controllers;
 [Controller]
 public sealed class UserController(ServerSession serverSession) : CustomController(serverSession)
 {
+	public const string ErrorsKey = "Errors";
+
 	[HttpPost]
 	[Route("/LogIn/")]
 	public async Task<IActionResult> UserLogIn([FromForm] LogInModel logInModel)
@@ -16,9 +18,9 @@ public sealed class UserController(ServerSession serverSession) : CustomControll
 
 		if (logInModel.Password != ServerSession.Password)
 		{
-			string errorMessage = "Invalid password.";
-			ModelState.AddModelError(string.Empty, errorMessage);
+			string[] errorMessages = ["Invalid password."];
 
+			ViewData[ErrorsKey] = errorMessages;
 			return View("Password");
 		}
 
