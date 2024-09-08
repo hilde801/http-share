@@ -15,6 +15,8 @@ public abstract class CustomController(ServerSession serverSession) : Controller
 	public const string PasswordClaim = "Password";
 
 
+	protected ServerSession ServerSession => serverSession;
+
 	protected string? DisplayName
 	{
 		get => User.Claims.FirstOrDefault(DisplayNamePredicate)?.Value;
