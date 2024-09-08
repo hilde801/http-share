@@ -12,8 +12,6 @@ public abstract class CustomController(ServerSession serverSession) : Controller
 {
 	public const string DisplayNameClaim = "DisplayName";
 
-	public const string PasswordClaim = "Password";
-
 
 	protected ServerSession ServerSession => serverSession;
 
@@ -28,10 +26,10 @@ public abstract class CustomController(ServerSession serverSession) : Controller
 		{
 			if (serverSession.Password is null) return false;
 
-			Claim? passwordClaim = User.Claims.FirstOrDefault(PasswordPredicate);
-			if (passwordClaim is null) return false;
+			Claim? displayNameClaim = User.Claims.FirstOrDefault(DisplayNamePredicate);
+			if (displayNameClaim is null) return false;
 
-			return passwordClaim.Value != serverSession.Password;
+			return displayNameClaim.Value != serverSession.Password;
 		}
 	}
 
@@ -52,10 +50,5 @@ public abstract class CustomController(ServerSession serverSession) : Controller
 	private bool DisplayNamePredicate(Claim claim)
 	{
 		return claim.Type.Equals(DisplayNameClaim, StringComparison.InvariantCultureIgnoreCase);
-	}
-
-	private bool PasswordPredicate(Claim claim)
-	{
-		return claim.Type.Equals(PasswordClaim, StringComparison.InvariantCultureIgnoreCase);
 	}
 }
