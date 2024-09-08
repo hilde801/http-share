@@ -55,12 +55,15 @@ public sealed class DualModeServer : IAsyncDisposable
 			.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 			.AddCookie(ConfigureCookieAuthentication);
 
+		builder.Services.AddAntiforgery();
 		builder.Services.AddSingleton<ServerSession>(dualSession);
+
 		builder.WebHost.ConfigureKestrel(ConfigureKestrel);
 
 
 		App = builder.Build();
 
+		App.UseAuthentication();
 		App.MapControllers();
 
 		App.Urls.Add($"http://*:{port}");
