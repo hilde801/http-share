@@ -5,8 +5,10 @@ using HttpShare.Controllers;
 using HttpShare.Files;
 using HttpShare.Sessions;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -49,8 +51,12 @@ public sealed class DualModeServer : IAsyncDisposable
 		builder.Services.AddControllersWithViews()
 			.AddApplicationPart(typeof(HomeController).Assembly);
 
-		builder.WebHost.ConfigureKestrel(ConfigureKestrel);
+		builder.Services
+			.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+			.AddCookie(ConfigureCookieAuthentication);
+
 		builder.Services.AddSingleton<ServerSession>(dualSession);
+		builder.WebHost.ConfigureKestrel(ConfigureKestrel);
 
 
 		App = builder.Build();
@@ -84,5 +90,13 @@ public sealed class DualModeServer : IAsyncDisposable
 	private void ConfigureKestrel(KestrelServerOptions options)
 	{
 		options.Limits.MaxRequestBodySize = long.MaxValue;
+	}
+
+	private void ConfigureCookieAuthentication(CookieAuthenticationOptions options)
+	{
+		options.LoginPath = "/";
+
+		options.Cookie.IsEssential = true;
+		options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 	}
 }
