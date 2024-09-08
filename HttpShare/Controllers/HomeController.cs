@@ -13,7 +13,7 @@ namespace HttpShare.Controllers;
 /// <param name="serverSession">The selected <see cref="ServerSession"/> object.</param>
 [Controller]
 [Route("/")]
-public sealed class HomeController(ServerSession serverSession) : Controller
+public sealed class HomeController(ServerSession serverSession) : CustomController(serverSession)
 {
 	/// <summary>
 	/// Handles requests to address /.
@@ -22,15 +22,20 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 	[Route("/")]
 	public IActionResult Index()
 	{
-		ViewData["PageTitle"] = $"{serverSession.HostName} - HTTP Share";
+		if (ServerSession.Password is not null && !IsUserAuthenticated)
+		{
+			return View("../User/Password");
+		}
 
-		bool sendSession = serverSession is ISendSession,
-			receiveSession = serverSession is IReceiveSession;
+		ViewData["PageTitle"] = $"{ServerSession.HostName} - HTTP Share";
+
+		bool sendSession = ServerSession is ISendSession,
+			receiveSession = ServerSession is IReceiveSession;
 
 		ViewData["SendSession"] = sendSession;
 		ViewData["ReceiveSession"] = receiveSession;
 
-		if (sendSession) ViewData["OutboxFiles"] = (serverSession as ISendSession)!.OutboxFiles;
+		if (sendSession) ViewData["OutboxFiles"] = (ServerSession as ISendSession)!.OutboxFiles;
 
 		return View();
 	}
