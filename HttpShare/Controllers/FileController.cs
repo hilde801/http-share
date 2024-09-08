@@ -1,50 +1,17 @@
-// Copyright 2024 Hilde801 (https://github.com/hilde801)
-// This file is a part of http-share
-
+using HttpShare.Files;
+using HttpShare.Sessions;
 using System.IO.Compression;
 
-using HttpShare.Files;
-using HttpShare.Models;
-using HttpShare.Sessions;
-
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using HttpShare.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace HttpShare.Controllers;
 
-/// <summary>
-/// The default controller class.
-/// </summary>
-/// <param name="serverSession">The selected <see cref="ServerSession"/> object.</param>
 [Controller]
-[Route("/")]
-public sealed class HomeController(ServerSession serverSession) : Controller
+public sealed class FileController(ServerSession serverSession) : Controller
 {
-	/// <summary>
-	/// Handles requests to address /.
-	/// </summary>
 	[HttpGet]
-	[Route("/")]
-	public IActionResult Index()
-	{
-		ViewData["PageTitle"] = $"{serverSession.HostName} - HTTP Share";
-
-		bool sendSession = serverSession is ISendSession,
-			receiveSession = serverSession is IReceiveSession;
-
-		ViewData["SendSession"] = sendSession;
-		ViewData["ReceiveSession"] = receiveSession;
-
-		if (sendSession) ViewData["OutboxFiles"] = (serverSession as ISendSession)!.OutboxFiles;
-
-		return View();
-	}
-
-
-	/// <summary>
-	/// Handles requests to address /Download/.
-	/// </summary>
-	/*[HttpGet]
 	[Route("/Download/")]
 	public IActionResult Download()
 	{
@@ -73,12 +40,10 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 
 		return File(zipData, "application/zip-compressed",
 			$"HttpShare_{DateTime.Now:yyyyMMdd_HHmmss}.zip");
-	}*/
+	}
 
-	/// <summary>
-	/// Handles requests to address /Upload/.
-	/// </summary>
-	/*[HttpPost]
+
+	[HttpPost]
 	[Route("/Upload/")]
 	public IActionResult Upload([FromForm] UploadDataModel uploadDataModel)
 	{
@@ -100,7 +65,5 @@ public sealed class HomeController(ServerSession serverSession) : Controller
 
 		(serverSession as IReceiveSession)!.InvokeReceivedFilesEvent(uploadFiles);
 		return Redirect("/");
-	}*/
+	}
 }
-
-// TODO Add implementation of the password system in this controller later
