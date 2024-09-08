@@ -22,6 +22,11 @@ public sealed class HomeController(ServerSession serverSession) : CustomControll
 	[Route("/")]
 	public IActionResult Index()
 	{
+		if (ServerSession.Password is not null && !IsUserAuthenticated)
+		{
+			return View("../User/Password");
+		}
+
 		ViewData["PageTitle"] = $"{ServerSession.HostName} - HTTP Share";
 
 		bool sendSession = ServerSession is ISendSession,
