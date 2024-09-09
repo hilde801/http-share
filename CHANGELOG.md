@@ -1,3 +1,10 @@
+## Protoype 3
+
+- Added "Server Options" control
+- Added server port input feature
+- Added client password protection feature
+- Codebase cleanup
+
 ## Prototype 2
 
 - Project file rearrangements

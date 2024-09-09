@@ -4,10 +4,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-using HttpShare.Windows.Models;
+using HttpShare.Files;
+using HttpShare.Windows.DataContexts;
+using HttpShare.Windows.Files;
 
 using Microsoft.Win32;
 
@@ -27,7 +30,7 @@ public partial class OutboxControl : UserControl
 	/// <summary>
 	/// A collection of <see cref="File"/>s to be sent to the clients.
 	/// </summary>
-	public ICollection<OutboxFile> OutboxFiles => ParsedDataContext.OutboxFiles;
+	public IEnumerable<IOutboxFile> OutboxFiles => ParsedDataContext.OutboxFiles.Cast<IOutboxFile>();
 
 
 	/// <summary>
@@ -48,20 +51,9 @@ public partial class OutboxControl : UserControl
 		OpenFileDialog addFilesDialog = (OpenFileDialog) sender!;
 		Stream[] fileStreams = addFilesDialog.OpenFiles();
 
-		foreach (FileStream fileStream in fileStreams)
+		foreach (FileStream fileStream in fileStreams.Cast<FileStream>())
 		{
-			string path = fileStream.Name;
-			byte[] data = null!;
-
-			using (MemoryStream memoryStream = new MemoryStream())
-			{
-				fileStream.CopyTo(memoryStream);
-				data = memoryStream.ToArray();
-			}
-
-			fileStream.Dispose();
-
-			ParsedDataContext.OutboxFiles.Add(new OutboxFile(path, data));
+			ParsedDataContext.OutboxFiles.Add((OutboxFileListItem) OutboxFileListItem.Load(fileStream));
 		}
 	}
 

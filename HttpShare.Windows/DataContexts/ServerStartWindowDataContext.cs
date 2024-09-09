@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 using HttpShare.Windows.Controls;
 
-namespace HttpShare.Windows.Models;
+namespace HttpShare.Windows.DataContexts;
 
 /// <summary>
 /// The data context class for <see cref="ServerStartWindow" />
@@ -43,5 +43,19 @@ public sealed class ServerStartWindowDataContext : INotifyPropertyChanged
 	private void InvokePropertyChangedEvent([CallerMemberName] string? propertyName = null)
 	{
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+
+
+	public int port = 80;
+
+	public int Port
+	{
+		get => port;
+
+		set
+		{
+			port = value;
+			InvokePropertyChangedEvent();
+		}
 	}
 }

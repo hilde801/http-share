@@ -7,11 +7,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:HttpShare.Windows.Controls"
-             xmlns:models="clr-namespace:HttpShare.Windows.Models"
+             xmlns:dataContexts="clr-namespace:HttpShare.Windows.DataContexts"
              mc:Ignorable="d" d:Background="White"
-             d:DesignHeight="300" d:DesignWidth="400">
+             d:DesignWidth="600" d:DesignHeight="500">
 	<UserControl.DataContext>
-		<models:OutboxControlDataContext />
+		<dataContexts:OutboxControlDataContext />
 	</UserControl.DataContext>
 
 	<Grid>
@@ -29,18 +29,27 @@
 		</Grid.RowDefinitions>
 
 		<DataGrid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"
-                  AutoGenerateColumns="False"
-                  CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                  IsReadOnly="True" ItemsSource="{Binding OutboxFiles, Mode=OneWay}">
+				  CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                  AutoGenerateColumns="False" ItemsSource="{Binding OutboxFiles, Mode=OneWay}">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="Filename" Binding="{Binding FileName}"
-									Width="200" MinWidth="200" />
+				<!-- TODO Uncomment this column when needed.
+				<DataGridTemplateColumn Width="30" CanUserResize="False" IsReadOnly="False">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<CheckBox HorizontalAlignment="Center"
+									  IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn> -->
+
+				<DataGridTextColumn Header="Filename" Binding="{Binding Name}"
+									Width="200" MinWidth="200" IsReadOnly="True" />
 
 				<DataGridTextColumn Header="Path" Binding="{Binding FilePath}"
-									Width="200" MinWidth="200" />
+									Width="200" MinWidth="200" IsReadOnly="True" />
 
-				<DataGridTextColumn Header="Size" Binding="{Binding Size}"
-									Width="100" MinWidth="100" />
+				<DataGridTextColumn Header="Size" Binding="{Binding Length}"
+									Width="100" MinWidth="100" IsReadOnly="True" />
 			</DataGrid.Columns>
 		</DataGrid>
 

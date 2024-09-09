@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
+using HttpShare.Files;
 using HttpShare.Servers;
-using HttpShare.Windows.Models;
+using HttpShare.Windows.DataContexts;
 
 namespace HttpShare.Windows.Controls;
 
@@ -33,6 +34,13 @@ public partial class MainWindow : Window
 	public MainWindow()
 	{
 		InitializeComponent();
+
+		serverOptionsControl.ServerOptions.PropertyChanged += OnChangeServerOptions;
+	}
+
+	private void OnChangeServerOptions(object? sender, PropertyChangedEventArgs e)
+	{
+		ParsedDataContext.EnableServerToggleButton = !serverOptionsControl.ServerOptions.HasErrors;
 	}
 
 
@@ -42,14 +50,21 @@ public partial class MainWindow : Window
 	/// <param name="sender">The sender object.</param>
 	private async void OnClickServerToggleButton(object? sender, RoutedEventArgs _)
 	{
+		ServerOptionsControl.IServerOptions serverOptions = serverOptionsControl.ServerOptions;
+
 		ParsedDataContext.IsServerRunning = !ParsedDataContext.IsServerRunning;
+
+		serverOptionsControl.IsEnabled = !serverOptionsControl.IsEnabled;
 
 		if (ParsedDataContext.IsServerRunning)
 		{
-			DualModeServer = new DualModeServer(80, outboxControl.OutboxFiles);
+			DualModeServer = new DualModeServer(serverOptions.Port,
+				outboxControl.OutboxFiles,
+				serverOptions.EnablePassword ? serverOptions.Password : null);
+
 			DualModeServer.ReceiveFile += OnReceivedFiles;
 
-			ServerStartWindow serverStartWindow = new ServerStartWindow { Owner = this };
+			ServerStartWindow serverStartWindow = new ServerStartWindow(serverOptions.Port) { Owner = this };
 			serverStartWindow.Show();
 
 			await DualModeServer!.StartAsync();
@@ -64,10 +79,10 @@ public partial class MainWindow : Window
 	/// <summary>
 	/// The handler method for file received event.
 	/// </summary>
-	/// <param name="files">The received <see cref="InboxFile"/> collection object.</param>
-	private void OnReceivedFiles(ICollection<InboxFile> files)
+	/// <param name="files">The received <see cref="IInboxFile"/> collection object.</param>
+	private void OnReceivedFiles(IEnumerable<IInboxFile> files)
 	{
-		inboxControl.AddInboxFiles(Dispatcher, files);
+		inboxControl.AddIInboxFiles(Dispatcher, files);
 	}
 
 	/// <summary>

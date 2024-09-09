@@ -1,7 +1,10 @@
 @* Copyright 2024 Hilde801 (https://github.com/hilde801) *@
 @* This file is a part of http-share *@
 
+@namespace HttpShare.Views.Home
+
 @using HttpShare
+@using HttpShare.Files
 @using HttpShare.Models
 
 @model UploadDataModel
@@ -17,15 +20,14 @@
 
 @if (sendSession)
 {
-    ICollection<OutboxFile> outboxFiles = (ViewData["OutboxFiles"] as ICollection<OutboxFile>)!;
+    IEnumerable<IOutboxFile> outboxFiles = (ViewData["OutboxFiles"] as IEnumerable<IOutboxFile>)!;
 
-    if (outboxFiles.Count > 0)
+    if (outboxFiles.Count() > 0)
     {
-
         <ol>
-            @foreach (OutboxFile file in outboxFiles)
+            @foreach (IOutboxFile file in outboxFiles)
             {
-                <li>@file.FileName</li>
+                <li>@file.Name</li>
             }
         </ol>
 

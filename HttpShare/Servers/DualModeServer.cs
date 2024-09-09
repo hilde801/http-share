@@ -2,10 +2,14 @@
 // This file is a part of http-share
 
 using HttpShare.Controllers;
+using HttpShare.Files;
 using HttpShare.Sessions;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HttpShare.Servers;
@@ -19,7 +23,7 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// The delegate of <see cref="ReceiveFile"/> handler. 
 	/// </summary>
 	/// <param name="inboxFiles"></param>
-	public delegate void ReceiveFilesHandler(ICollection<InboxFile> inboxFiles);
+	public delegate void ReceiveFilesHandler(ICollection<IInboxFile> inboxFiles);
 
 	/// <summary>
 	/// Invoked when the the server receive files from client devices. 
@@ -37,9 +41,9 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// </summary>
 	/// <param name="port">The port to be used.</param>
 	/// <param name="outboxFiles">A collection of files to be sent to client devices.</param>
-	public DualModeServer(int port, ICollection<OutboxFile> outboxFiles)
+	public DualModeServer(int port, IEnumerable<IOutboxFile> outboxFiles, string? password = null)
 	{
-		DualSession dualSession = new DualSession(outboxFiles);
+		DualSession dualSession = new DualSession(outboxFiles) { Password = password };
 		dualSession.OnReceivedFiles += HandleReceivedFiles;
 
 		WebApplicationBuilder builder = WebApplication.CreateBuilder();
@@ -47,13 +51,19 @@ public sealed class DualModeServer : IAsyncDisposable
 		builder.Services.AddControllersWithViews()
 			.AddApplicationPart(typeof(HomeController).Assembly);
 
-		builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = long.MaxValue);
+		builder.Services
+			.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+			.AddCookie(ConfigureCookieAuthentication);
 
+		builder.Services.AddAntiforgery();
 		builder.Services.AddSingleton<ServerSession>(dualSession);
+
+		builder.WebHost.ConfigureKestrel(ConfigureKestrel);
 
 
 		App = builder.Build();
 
+		App.UseAuthentication();
 		App.MapControllers();
 
 		App.Urls.Add($"http://*:{port}");
@@ -77,5 +87,19 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// Invoke <see cref="ReceiveFile"/>.
 	/// </summary>
 	/// <param name="inboxFiles">A collection of files received from the client.</param>
-	private void HandleReceivedFiles(ICollection<InboxFile> inboxFiles) => ReceiveFile?.Invoke(inboxFiles);
+	private void HandleReceivedFiles(ICollection<IInboxFile> inboxFiles) => ReceiveFile?.Invoke(inboxFiles);
+
+
+	private void ConfigureKestrel(KestrelServerOptions options)
+	{
+		options.Limits.MaxRequestBodySize = long.MaxValue;
+	}
+
+	private void ConfigureCookieAuthentication(CookieAuthenticationOptions options)
+	{
+		options.LoginPath = "/";
+
+		options.Cookie.IsEssential = true;
+		options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+	}
 }
