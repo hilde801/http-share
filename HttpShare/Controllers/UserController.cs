@@ -1,4 +1,3 @@
-using HttpShare.Models;
 using HttpShare.Sessions;
 
 using Microsoft.AspNetCore.Mvc;
@@ -14,22 +13,19 @@ public sealed class UserController(ServerSession serverSession) : CustomControll
 	[Route("/LogIn/")]
 	public async Task<IActionResult> LogIn([FromForm] string displayName, [FromForm] string password)
 	{
-		// bool isPassword = loginModel is LogInPasswordModel;
-
-		/*if (ServerSession.Password == null) return RedirectPermanent("/");
-
-		if (logInModel.Password != ServerSession.Password)
+		if (!string.IsNullOrEmpty(ServerSession.Password)
+			|| !string.IsNullOrWhiteSpace(ServerSession.Password))
 		{
-			string[] errorMessages = ["Invalid password."];
+			if (!password.Equals(ServerSession.Password))
+			{
+				string[] errorMessages = ["Invalid password."];
 
-			ViewData[ErrorsKey] = errorMessages;
-			return View("Password");
+				ViewData[ErrorsKey] = errorMessages;
+				return View("../User/LogInPassword");
+			}
 		}
 
-		await UserLogIn(logInModel.DisplayName);*/
-
-
-
+		await UserLogIn(displayName);
 		return RedirectPermanent("/");
 	}
 }
