@@ -4,15 +4,11 @@
     Layout = "../_Layout";
 }
 
-@using HttpShare.Models
-
-@model LogInModel
-
 <main>
-    @using (Html.BeginForm(FormMethod.Post, true, null))
+    @using (Html.BeginForm("LogIn", "User", null, FormMethod.Post, true, null))
     {
-        @Html.LabelFor(m => m.DisplayName, "Display Name:")
-        @Html.TextBoxFor(m => m.DisplayName)
+        <label for="displayName">Display Name:</label>
+        <input type="text" id="displayName" name="displayName" required />
 
         <button type="submit">
             <p>Continue</p>

@@ -12,9 +12,11 @@ public sealed class UserController(ServerSession serverSession) : CustomControll
 
 	[HttpPost]
 	[Route("/LogIn/")]
-	public async Task<IActionResult> UserLogIn([FromForm] LogInModel logInModel)
+	public async Task<IActionResult> LogIn([FromForm] string displayName, [FromForm] string password)
 	{
-		if (ServerSession.Password == null) return RedirectPermanent("/");
+		// bool isPassword = loginModel is LogInPasswordModel;
+
+		/*if (ServerSession.Password == null) return RedirectPermanent("/");
 
 		if (logInModel.Password != ServerSession.Password)
 		{
@@ -24,7 +26,10 @@ public sealed class UserController(ServerSession serverSession) : CustomControll
 			return View("Password");
 		}
 
-		await UserLogIn(logInModel.DisplayName);
+		await UserLogIn(logInModel.DisplayName);*/
+
+
+
 		return RedirectPermanent("/");
 	}
 }
