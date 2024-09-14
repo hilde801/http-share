@@ -1,6 +1,6 @@
 namespace HttpShare;
 
-public static class ClaimConstants
+public static class Constants
 {
-	public static string DisplayName { get; } = "DisplayNameClaim";
+	public const string LoggedInUsersOnlyPolicy = "LoggedInUsersOnly";
 }

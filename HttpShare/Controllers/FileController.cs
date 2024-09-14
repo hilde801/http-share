@@ -4,6 +4,7 @@ using HttpShare.Files;
 using HttpShare.Models;
 using HttpShare.Sessions;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,7 @@ public sealed class FileController(ServerSession serverSession) : Controller
 {
 	[HttpGet]
 	[Route("/Download/")]
+	[Authorize(Policy = Constants.LoggedInUsersOnlyPolicy)]
 	public IActionResult Download()
 	{
 		bool sendSession = serverSession is ISendSession;
@@ -46,6 +48,7 @@ public sealed class FileController(ServerSession serverSession) : Controller
 
 	[HttpPost]
 	[Route("/Upload/")]
+	[Authorize(Policy = Constants.LoggedInUsersOnlyPolicy)]
 	public IActionResult Upload([FromForm] UploadDataModel uploadDataModel)
 	{
 		bool isReceiveSession = serverSession is IReceiveSession;

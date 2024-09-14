@@ -3,6 +3,7 @@
 
 using HttpShare.Sessions;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HttpShare.Controllers;
@@ -20,18 +21,9 @@ public sealed class HomeController(ServerSession serverSession) : CustomControll
 	/// </summary>
 	[HttpGet]
 	[Route("/")]
+	[Authorize(Policy = Constants.LoggedInUsersOnlyPolicy)]
 	public IActionResult Index()
 	{
-		if (!IsUserAuthenticated && ServerSession.Password is not null)
-		{
-			return View("../User/LogInPassword");
-		}
-
-		if (!IsUserAuthenticated)
-		{
-			return View("../User/LogIn");
-		}
-
 		ViewData["PageTitle"] = $"{ServerSession.HostName} - HTTP Share";
 
 		bool sendSession = ServerSession is ISendSession,
@@ -45,5 +37,3 @@ public sealed class HomeController(ServerSession serverSession) : CustomControll
 		return View();
 	}
 }
-
-// TODO Add implementation of the password system in this controller later
