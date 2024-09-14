@@ -63,11 +63,6 @@ public sealed class DualModeServer : IAsyncDisposable
 				options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 			});
 
-		builder.Services.AddAntiforgery();
-		builder.Services.AddSingleton<ServerSession>(dualSession);
-
-		builder.WebHost.ConfigureKestrel(ConfigureKestrel);
-
 		builder.Services.AddAuthorization(options =>
 		{
 			options.AddPolicy(Constants.LoggedInUsersOnlyPolicy, policy =>
@@ -75,6 +70,11 @@ public sealed class DualModeServer : IAsyncDisposable
 				policy.RequireClaim(ClaimTypes.Name);
 			});
 		});
+
+		builder.Services.AddAntiforgery();
+		builder.Services.AddSingleton<ServerSession>(dualSession);
+
+		builder.WebHost.ConfigureKestrel(ConfigureKestrel);
 
 
 		App = builder.Build();

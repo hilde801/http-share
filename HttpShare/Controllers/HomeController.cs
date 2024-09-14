@@ -14,6 +14,7 @@ namespace HttpShare.Controllers;
 /// <param name="serverSession">The selected <see cref="ServerSession"/> object.</param>
 [Controller]
 [Route("/")]
+[Authorize(Policy = Constants.LoggedInUsersOnlyPolicy)]
 public sealed class HomeController(ServerSession serverSession) : CustomController(serverSession)
 {
 	/// <summary>
@@ -21,7 +22,6 @@ public sealed class HomeController(ServerSession serverSession) : CustomControll
 	/// </summary>
 	[HttpGet]
 	[Route("/")]
-	[Authorize(Policy = Constants.LoggedInUsersOnlyPolicy)]
 	public IActionResult Index()
 	{
 		ViewData["PageTitle"] = $"{ServerSession.HostName} - HTTP Share";
