@@ -3,6 +3,7 @@
 
 using HttpShare.Sessions;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,8 @@ namespace HttpShare.Controllers;
 /// <param name="serverSession">The selected <see cref="ServerSession"/> object.</param>
 [Controller]
 [Route("/")]
-[Authorize(Policy = Constants.LoggedInUsersOnlyPolicy)]
+[Authorize(Policy = Constants.LoggedInUsersOnlyPolicy,
+	AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
 public sealed class HomeController(ServerSession serverSession) : CustomController(serverSession)
 {
 	/// <summary>

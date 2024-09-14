@@ -36,6 +36,6 @@ public sealed class UserController(ServerSession serverSession) : CustomControll
 		}
 
 		await UserLogIn(displayName);
-		return RedirectPermanent("/");
+		return Redirect("/");
 	}
 }
