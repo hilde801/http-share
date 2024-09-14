@@ -22,9 +22,14 @@ public sealed class HomeController(ServerSession serverSession) : CustomControll
 	[Route("/")]
 	public IActionResult Index()
 	{
-		if (ServerSession.Password is not null && !IsUserAuthenticated)
+		if (!IsUserAuthenticated && ServerSession.Password is not null)
 		{
-			return View("../User/Password");
+			return View("../User/LogInPassword");
+		}
+
+		if (!IsUserAuthenticated)
+		{
+			return View("../User/LogIn");
 		}
 
 		ViewData["PageTitle"] = $"{ServerSession.HostName} - HTTP Share";
