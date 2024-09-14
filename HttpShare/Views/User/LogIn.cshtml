@@ -1,0 +1,21 @@
+@namespace HttpShare.Views.Users
+
+@{
+    Layout = "../_Layout";
+}
+
+@using HttpShare.Models
+
+@model UserLogInModel
+
+<main>
+    @using (Html.BeginForm(FormMethod.Post, true, null))
+    {
+        @Html.LabelFor(m => m.DisplayName, "Display Name:")
+        @Html.TextBoxFor(m => m.DisplayName)
+
+        <button type="submit">
+            <p>Continue</p>
+        </button>
+    }
+</main>
