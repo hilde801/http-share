@@ -4,12 +4,16 @@ using HttpShare.Files;
 using HttpShare.Models;
 using HttpShare.Sessions;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HttpShare.Controllers;
 
 [Controller]
+[Authorize(Policy = Constants.LoggedInUsersOnlyPolicy,
+	AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
 public sealed class FileController(ServerSession serverSession) : Controller
 {
 	[HttpGet]

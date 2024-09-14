@@ -1,6 +1,8 @@
 // Copyright 2024 Hilde801 (https://github.com/hilde801)
 // This file is a part of http-share
 
+using System.Security.Claims;
+
 using HttpShare.Controllers;
 using HttpShare.Files;
 using HttpShare.Sessions;
@@ -53,7 +55,21 @@ public sealed class DualModeServer : IAsyncDisposable
 
 		builder.Services
 			.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-			.AddCookie(ConfigureCookieAuthentication);
+			.AddCookie(options =>
+			{
+				options.LoginPath = "/LogIn/";
+
+				options.Cookie.IsEssential = true;
+				options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+			});
+
+		builder.Services.AddAuthorization(options =>
+		{
+			options.AddPolicy(Constants.LoggedInUsersOnlyPolicy, policy =>
+			{
+				policy.RequireClaim(ClaimTypes.Name);
+			});
+		});
 
 		builder.Services.AddAntiforgery();
 		builder.Services.AddSingleton<ServerSession>(dualSession);
@@ -93,13 +109,5 @@ public sealed class DualModeServer : IAsyncDisposable
 	private void ConfigureKestrel(KestrelServerOptions options)
 	{
 		options.Limits.MaxRequestBodySize = long.MaxValue;
-	}
-
-	private void ConfigureCookieAuthentication(CookieAuthenticationOptions options)
-	{
-		options.LoginPath = "/";
-
-		options.Cookie.IsEssential = true;
-		options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 	}
 }
