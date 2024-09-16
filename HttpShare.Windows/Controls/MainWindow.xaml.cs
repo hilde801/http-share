@@ -7,6 +7,7 @@ using System.Windows;
 
 using HttpShare.Files;
 using HttpShare.Servers;
+using HttpShare.Sessions;
 using HttpShare.Windows.DataContexts;
 
 namespace HttpShare.Windows.Controls;
@@ -63,6 +64,7 @@ public partial class MainWindow : Window
 				serverOptions.EnablePassword ? serverOptions.Password : null);
 
 			DualModeServer.DualSession.OnReceivedFiles += OnReceivedFiles;
+			DualModeServer.DualSession.ServerEvent += DualSessionServerEvent;
 
 			ServerStartWindow serverStartWindow = new ServerStartWindow(serverOptions.Port) { Owner = this };
 			serverStartWindow.Show();
@@ -74,6 +76,11 @@ public partial class MainWindow : Window
 
 		outboxControl.IsEnabled = !ParsedDataContext.IsServerRunning;
 
+	}
+
+	private void DualSessionServerEvent(ServerEventType type, string message)
+	{
+		logControl.AddServerEvent(type, message);
 	}
 
 	/// <summary>
