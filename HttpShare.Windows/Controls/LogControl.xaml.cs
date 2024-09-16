@@ -16,8 +16,8 @@ public partial class LogControl : UserControl
 	}
 
 
-	public void AddServerEvent(ServerEventType type, string message)
+	public void AddServerEvent(ServerEvent serverEvent)
 	{
-		ParsedDataContext.AddLog(type, message);
+		ParsedDataContext.AddLog(serverEvent);
 	}
 }

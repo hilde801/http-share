@@ -78,9 +78,9 @@ public partial class MainWindow : Window
 
 	}
 
-	private void DualSessionServerEvent(ServerEventType type, string message)
+	private void DualSessionServerEvent(ServerEvent serverEvent)
 	{
-		logControl.AddServerEvent(type, message);
+		logControl.AddServerEvent(serverEvent);
 	}
 
 	/// <summary>
