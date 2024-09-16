@@ -12,8 +12,13 @@ public sealed class LogControlDataContext : INotifyPropertyChanged
 
 	public record AppLogItem(ServerEventType Type, string Message);
 
-	private IEnumerable<AppLogItem> appLog = [];
+	private List<AppLogItem> appLog = [];
 
 	public IEnumerable<AppLogItem> AppLog => appLog;
 
+
+	public void AddLog(ServerEventType type, string message)
+	{
+		appLog.Add(new AppLogItem(type, message));
+	}
 }
