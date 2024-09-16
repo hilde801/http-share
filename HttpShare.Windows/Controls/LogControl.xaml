@@ -7,5 +7,10 @@
              xmlns:dataContexts="clr-namespace:HttpShare.Windows.DataContexts"
              mc:Ignorable="d" d:Background="White"
              d:DesignHeight="300" d:DesignWidth="400">
-	<!-- TODO Add something here later -->
+	<DataGrid>
+		<DataGrid.Columns>
+			<DataGridTextColumn Header="Type" Width="100" MinWidth="100" />
+			<DataGridTextColumn Header="Message" Width="300" MinWidth="300" />
+		</DataGrid.Columns>
+	</DataGrid>
 </UserControl>
