@@ -7,10 +7,8 @@ namespace HttpShare.Sessions;
 /// This class is the base to describe server session classes.
 /// All classes that inherit this class will be used as a session type.
 /// </summary>
-public abstract class ServerSession
+public abstract partial class ServerSession
 {
-	public enum ServerEventType : int { Error, Information }
-
 	public delegate void ServerEventHandler(ServerEventType type, string message);
 
 	public event ServerEventHandler? ServerEvent;
