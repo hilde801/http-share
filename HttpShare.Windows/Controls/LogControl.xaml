@@ -7,10 +7,18 @@
              xmlns:dataContexts="clr-namespace:HttpShare.Windows.DataContexts"
              mc:Ignorable="d" d:Background="White"
              d:DesignHeight="300" d:DesignWidth="400">
-	<DataGrid>
+	<UserControl.DataContext>
+		<dataContexts:LogControlDataContext />
+	</UserControl.DataContext>
+	
+	<DataGrid AutoGenerateColumns="False" IsReadOnly="True"
+			  ItemsSource="{Binding AppLog, Mode=OneWay, UpdateSourceTrigger=Explicit}">
 		<DataGrid.Columns>
-			<DataGridTextColumn Header="Type" Width="100" MinWidth="100" />
-			<DataGridTextColumn Header="Message" Width="300" MinWidth="300" />
+			<DataGridTextColumn Header="Type" Width="100" MinWidth="100"
+								Binding="{Binding Type}" />
+			
+			<DataGridTextColumn Header="Message" Width="300" MinWidth="300"
+								Binding="{Binding Message}" />
 		</DataGrid.Columns>
 	</DataGrid>
 </UserControl>
