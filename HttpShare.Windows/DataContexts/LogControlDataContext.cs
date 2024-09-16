@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -10,7 +11,9 @@ public sealed class LogControlDataContext : INotifyPropertyChanged
 	public event PropertyChangedEventHandler? PropertyChanged;
 
 
-	private List<ServerEvent> appLog = [];
+	private List<ServerEvent> appLog = [
+		new ServerEvent(ServerEventType.Information,"Ready", DateTime.UtcNow)
+	];
 
 	public IEnumerable<ServerEvent> AppLog => appLog;
 

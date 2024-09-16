@@ -16,6 +16,7 @@
 		<DataGrid.Columns>
 			<DataGridTextColumn Header="Type" MinWidth="100" Width="100" Binding="{Binding Type}" />
 			<DataGridTextColumn Header="Message" MinWidth="200" Binding="{Binding Message}" />
+			<DataGridTextColumn Header="Timestamp" MinWidth="150" Binding="{Binding TimestampText}" />
 		</DataGrid.Columns>
 	</DataGrid>
 </UserControl>
