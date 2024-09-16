@@ -62,7 +62,7 @@ public partial class MainWindow : Window
 				outboxControl.OutboxFiles,
 				serverOptions.EnablePassword ? serverOptions.Password : null);
 
-			DualModeServer.ReceiveFile += OnReceivedFiles;
+			DualModeServer.DualSession.OnReceivedFiles += OnReceivedFiles;
 
 			ServerStartWindow serverStartWindow = new ServerStartWindow(serverOptions.Port) { Owner = this };
 			serverStartWindow.Show();
