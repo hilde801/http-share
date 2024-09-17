@@ -1,7 +1,6 @@
 // Copyright 2024 Hilde801 (https://github.com/hilde801)
 // This file is a part of http-share
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -70,14 +69,14 @@ public partial class MainWindow : Window
 			ServerStartWindow serverStartWindow = new ServerStartWindow(serverOptions.Port) { Owner = this };
 			serverStartWindow.Show();
 
-			logControl.AddServerEvent(new ServerEvent(ServerEventType.Information, "Server started!", DateTime.UtcNow));
+			logControl.AddServerEvent(new ServerEvent(ServerEventType.Information, "Server started!"));
 
 			await DualModeServer!.StartAsync();
 		}
 
 		else
 		{
-			logControl.AddServerEvent(new ServerEvent(ServerEventType.Information, "Server stopped!", DateTime.UtcNow));
+			logControl.AddServerEvent(new ServerEvent(ServerEventType.Information, "Server stopped!"));
 
 			await DualModeServer!.DisposeAsync();
 		}
