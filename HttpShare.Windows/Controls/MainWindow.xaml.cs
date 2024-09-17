@@ -87,7 +87,7 @@ public partial class MainWindow : Window
 
 	private void DualSessionServerEvent(ServerEvent serverEvent)
 	{
-		logControl.AddServerEvent(serverEvent);
+		Dispatcher.Invoke(() => logControl.AddServerEvent(serverEvent));
 	}
 
 	/// <summary>
