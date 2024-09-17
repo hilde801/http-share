@@ -35,6 +35,9 @@ public sealed class UserController(ServerSession serverSession) : CustomControll
 			}
 		}
 
+		string message = $"Client log in: {displayName}";
+		ServerSession.InvokeServerEvent(new ServerEvent(ServerEventType.Information, message));
+
 		await UserLogIn(displayName);
 		return Redirect("/");
 	}
