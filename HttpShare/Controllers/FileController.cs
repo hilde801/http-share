@@ -44,6 +44,11 @@ public sealed class FileController(ServerSession serverSession) : CustomControll
 		memoryStream.Flush();
 		memoryStream.Dispose();
 
+		string displayName = User.Claims.First(claim => claim.Type == ClaimTypes.Name).Value,
+			message = $"File download to {displayName}.";
+
+		ServerSession.InvokeServerEvent(new ServerEvent(ServerEventType.Information, message));
+
 		return File(zipData, "application/zip-compressed",
 			$"HttpShare_{DateTime.Now:yyyyMMdd_HHmmss}.zip");
 	}
