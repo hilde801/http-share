@@ -12,7 +12,7 @@
 	</UserControl.DataContext>
 
 	<DataGrid AutoGenerateColumns="False" IsReadOnly="True"
-			  ItemsSource="{Binding AppLog, Mode=OneWay, UpdateSourceTrigger=Explicit}">
+			  ItemsSource="{Binding AppLog, Mode=OneWay}">
 		<DataGrid.Columns>
 			<DataGridTextColumn Header="Type" MinWidth="100" Width="100" Binding="{Binding Type}" />
 			<DataGridTextColumn Header="Message" MinWidth="200" Binding="{Binding Message}" />

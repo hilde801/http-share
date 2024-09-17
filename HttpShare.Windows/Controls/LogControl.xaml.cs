@@ -18,6 +18,6 @@ public partial class LogControl : UserControl
 
 	public void AddServerEvent(ServerEvent serverEvent)
 	{
-		ParsedDataContext.AddLog(serverEvent);
+		ParsedDataContext.AppLog.Add(serverEvent);
 	}
 }
