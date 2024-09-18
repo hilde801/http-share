@@ -7,8 +7,15 @@ namespace HttpShare.Sessions;
 /// This class is the base to describe server session classes.
 /// All classes that inherit this class will be used as a session type.
 /// </summary>
-public abstract class ServerSession
+public abstract partial class ServerSession
 {
+	public delegate void ServerEventHandler(ServerEvent serverEvent);
+
+	public event ServerEventHandler? ServerEvent;
+
+	internal void InvokeServerEvent(ServerEvent serverEvent) => ServerEvent?.Invoke(serverEvent);
+
+
 	/// <summary>
 	/// Gets the host's display name.
 	/// </summary>

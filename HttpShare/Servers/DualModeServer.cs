@@ -22,20 +22,12 @@ namespace HttpShare.Servers;
 public sealed class DualModeServer : IAsyncDisposable
 {
 	/// <summary>
-	/// The delegate of <see cref="ReceiveFile"/> handler. 
-	/// </summary>
-	/// <param name="inboxFiles"></param>
-	public delegate void ReceiveFilesHandler(ICollection<IInboxFile> inboxFiles);
-
-	/// <summary>
-	/// Invoked when the the server receive files from client devices. 
-	/// </summary>
-	public event ReceiveFilesHandler? ReceiveFile;
-
-	/// <summary>
 	/// The <see cref="WebApplication"/> instance.
 	/// </summary>
 	private WebApplication App { get; }
+
+
+	public DualSession DualSession { get; }
 
 
 	/// <summary>
@@ -45,8 +37,7 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// <param name="outboxFiles">A collection of files to be sent to client devices.</param>
 	public DualModeServer(int port, IEnumerable<IOutboxFile> outboxFiles, string? password = null)
 	{
-		DualSession dualSession = new DualSession(outboxFiles) { Password = password };
-		dualSession.OnReceivedFiles += HandleReceivedFiles;
+		DualSession = new DualSession(outboxFiles) { Password = password };
 
 		WebApplicationBuilder builder = WebApplication.CreateBuilder();
 
@@ -72,7 +63,7 @@ public sealed class DualModeServer : IAsyncDisposable
 		});
 
 		builder.Services.AddAntiforgery();
-		builder.Services.AddSingleton<ServerSession>(dualSession);
+		builder.Services.AddSingleton<ServerSession>(DualSession);
 
 		builder.WebHost.ConfigureKestrel(ConfigureKestrel);
 
@@ -103,7 +94,7 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// Invoke <see cref="ReceiveFile"/>.
 	/// </summary>
 	/// <param name="inboxFiles">A collection of files received from the client.</param>
-	private void HandleReceivedFiles(ICollection<IInboxFile> inboxFiles) => ReceiveFile?.Invoke(inboxFiles);
+	//private void HandleReceivedFiles(ICollection<IInboxFile> inboxFiles) => ReceiveFile?.Invoke(inboxFiles);
 
 
 	private void ConfigureKestrel(KestrelServerOptions options)
