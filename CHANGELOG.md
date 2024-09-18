@@ -1,4 +1,8 @@
-## Protoype 3
+## Prototype 4
+
+- Added the "Log" tab in the advanced window
+
+## Prototype 3
 
 - Added "Server Options" control
 - Added server port input feature
