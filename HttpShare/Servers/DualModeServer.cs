@@ -21,6 +21,15 @@ namespace HttpShare.Servers;
 /// </summary>
 public sealed class DualModeServer : IAsyncDisposable
 {
+	// ================================================================================ //
+	// TODO Move these stuff into a separate parent class later
+	// ================================================================================ //
+	public delegate void ServerEvent();
+
+	public event ServerEvent? ServerStarted, ServerEnded;
+	// ================================================================================ //
+
+
 	/// <summary>
 	/// The <see cref="WebApplication"/> instance.
 	/// </summary>
@@ -120,7 +129,8 @@ public sealed class DualModeServer : IAsyncDisposable
 	{
 		CancellationTokenSource.Token.Register(A2);
 
-		App.Run();
+		App.RunAsync();
+		ServerStarted?.Invoke();
 	}
 
 	private async void A2()
@@ -129,5 +139,7 @@ public sealed class DualModeServer : IAsyncDisposable
 
 		await App.StopAsync();
 		await App.DisposeAsync();
+
+		ServerEnded?.Invoke();
 	}
 }

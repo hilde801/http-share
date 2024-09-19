@@ -66,6 +66,25 @@ public partial class MainWindow : Window
 			DualModeServer.DualSession.OnReceivedFiles += OnReceivedFiles;
 			DualModeServer.DualSession.ServerEvent += DualSessionServerEvent;
 
+			DualModeServer.ServerStarted += () =>
+			{
+				Dispatcher.Invoke(() =>
+				{
+					ServerStartWindow serverStartWindow = new ServerStartWindow(serverOptions.Port) { Owner = this };
+					serverStartWindow.Show();
+
+					logControl.AddServerEvent(new ServerSessionEvent(ServerEventType.Information, "Server started!"));
+				});
+			};
+
+			DualModeServer.ServerEnded += () =>
+			{
+				Dispatcher.Invoke(() =>
+				{
+					logControl.AddServerEvent(new ServerSessionEvent(ServerEventType.Information, "Server stopped!"));
+				});
+			};
+
 			// TODO Uncomment this later
 			/*ServerStartWindow serverStartWindow = new ServerStartWindow(serverOptions.Port) { Owner = this };
 			serverStartWindow.Show();
