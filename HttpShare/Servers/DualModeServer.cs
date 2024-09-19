@@ -30,6 +30,9 @@ public sealed class DualModeServer : IAsyncDisposable
 	public DualSession DualSession { get; }
 
 
+	private CancellationTokenSource CancellationTokenSource { get; }
+
+
 	/// <summary>
 	/// Initializes an instance of <see cref="DualModeServer"/>.
 	/// </summary>
@@ -37,6 +40,8 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// <param name="outboxFiles">A collection of files to be sent to client devices.</param>
 	public DualModeServer(int port, IEnumerable<IOutboxFile> outboxFiles, string? password = null)
 	{
+		CancellationTokenSource = new CancellationTokenSource();
+
 		DualSession = new DualSession(outboxFiles) { Password = password };
 
 		WebApplicationBuilder builder = WebApplication.CreateBuilder();
@@ -81,13 +86,21 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// Starts the server.
 	/// </summary>
 	/// <returns></returns>
+	[Obsolete]
 	public Task StartAsync() => App.RunAsync();
 
 	/// <summary>
 	/// Stop and dispose the server.
 	/// </summary>
 	/// <returns></returns>
+	[Obsolete]
 	public ValueTask DisposeAsync() => App.DisposeAsync();
+
+
+	public void Start() => new Thread(A1).Start();
+
+	public void Stop() => CancellationTokenSource.Cancel();
+
 
 
 	/// <summary>
@@ -100,5 +113,21 @@ public sealed class DualModeServer : IAsyncDisposable
 	private void ConfigureKestrel(KestrelServerOptions options)
 	{
 		options.Limits.MaxRequestBodySize = long.MaxValue;
+	}
+
+
+	private void A1()
+	{
+		CancellationTokenSource.Token.Register(A2);
+
+		App.Run();
+	}
+
+	private async void A2()
+	{
+		CancellationTokenSource.Dispose();
+
+		await App.StopAsync();
+		await App.DisposeAsync();
 	}
 }
