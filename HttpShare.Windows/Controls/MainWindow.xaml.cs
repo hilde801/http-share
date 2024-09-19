@@ -49,7 +49,7 @@ public partial class MainWindow : Window
 	/// The handler method for the server toggle button on click event.
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
-	private async void OnClickServerToggleButton(object? sender, RoutedEventArgs _)
+	private /*async*/ void OnClickServerToggleButton(object? sender, RoutedEventArgs _)
 	{
 		ServerOptionsControl.IServerOptions serverOptions = serverOptionsControl.ServerOptions;
 
@@ -71,14 +71,13 @@ public partial class MainWindow : Window
 
 			logControl.AddServerEvent(new ServerEvent(ServerEventType.Information, "Server started!"));
 
-			await DualModeServer!.StartAsync();
+			DualModeServer.Start();
 		}
 
 		else
 		{
 			logControl.AddServerEvent(new ServerEvent(ServerEventType.Information, "Server stopped!"));
-
-			await DualModeServer!.DisposeAsync();
+			DualModeServer!.Stop();
 		}
 
 		outboxControl.IsEnabled = !ParsedDataContext.IsServerRunning;
@@ -102,11 +101,12 @@ public partial class MainWindow : Window
 	/// <summary>
 	/// The handler method for file received event. 
 	/// </summary>
-	protected async override void OnClosing(CancelEventArgs e)
+	protected /*async*/ override void OnClosing(CancelEventArgs e)
 	{
 		if (ParsedDataContext.IsServerRunning && DualModeServer != null)
 		{
-			await DualModeServer.DisposeAsync();
+			//await DualModeServer.DisposeAsync();
+			DualModeServer!.Stop();
 		}
 
 		base.OnClosing(e);
