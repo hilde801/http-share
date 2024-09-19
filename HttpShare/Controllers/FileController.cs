@@ -47,7 +47,7 @@ public sealed class FileController(ServerSession serverSession) : CustomControll
 		string displayName = User.Claims.First(claim => claim.Type == ClaimTypes.Name).Value,
 			message = $"File download to {displayName}.";
 
-		ServerSession.InvokeServerEvent(new ServerEvent(ServerEventType.Information, message));
+		ServerSession.InvokeServerEvent(new ServerSessionEvent(ServerEventType.Information, message));
 
 		return File(zipData, "application/zip-compressed",
 			$"HttpShare_{DateTime.Now:yyyyMMdd_HHmmss}.zip");
@@ -78,7 +78,7 @@ public sealed class FileController(ServerSession serverSession) : CustomControll
 		string displayName = User.Claims.First(claim => claim.Type == ClaimTypes.Name).Value,
 			message = $"File upload ({uploadFiles.Count}) from {displayName}.";
 
-		ServerSession.InvokeServerEvent(new ServerEvent(ServerEventType.Information, message));
+		ServerSession.InvokeServerEvent(new ServerSessionEvent(ServerEventType.Information, message));
 
 		(ServerSession as IReceiveSession)!.InvokeReceivedFilesEvent(uploadFiles);
 		return Redirect("/");

@@ -6,7 +6,7 @@ namespace HttpShare.Windows.DataContexts;
 
 public sealed class LogControlDataContext
 {
-	public ObservableCollection<ServerEvent> AppLog { get; } = [
-		new ServerEvent(ServerEventType.Information, "Ready")
+	public ObservableCollection<ServerSessionEvent> AppLog { get; } = [
+		new ServerSessionEvent(ServerEventType.Information, "Ready")
 	];
 }

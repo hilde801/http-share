@@ -9,11 +9,11 @@ namespace HttpShare.Sessions;
 /// </summary>
 public abstract partial class ServerSession
 {
-	public delegate void ServerEventHandler(ServerEvent serverEvent);
+	public delegate void ServerSessionEventHandler(ServerSessionEvent serverEvent);
 
-	public event ServerEventHandler? ServerEvent;
+	public event ServerSessionEventHandler? ServerEvent;
 
-	internal void InvokeServerEvent(ServerEvent serverEvent) => ServerEvent?.Invoke(serverEvent);
+	internal void InvokeServerEvent(ServerSessionEvent serverEvent) => ServerEvent?.Invoke(serverEvent);
 
 
 	/// <summary>

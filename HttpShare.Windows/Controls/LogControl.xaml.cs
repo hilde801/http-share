@@ -16,7 +16,7 @@ public partial class LogControl : UserControl
 	}
 
 
-	public void AddServerEvent(ServerEvent serverEvent)
+	public void AddServerEvent(ServerSessionEvent serverEvent)
 	{
 		ParsedDataContext.AppLog.Add(serverEvent);
 	}

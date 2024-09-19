@@ -1,6 +1,6 @@
 namespace HttpShare.Sessions;
 
-public sealed class ServerEvent(ServerEventType type, string message)
+public sealed class ServerSessionEvent(ServerEventType type, string message)
 {
 	public DateTime Timestamp { get; } = DateTime.UtcNow;
 
