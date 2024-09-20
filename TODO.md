@@ -8,6 +8,6 @@
 - [ ] Add a project website.
 - [ ] Overhaul project documentation (e.g. [README.md](./README.md) and in-file documentations).
 - [ ] Add an "About" control.
-- [ ] Add an "Exception/Error" window (just in case).
+- [X] Add an "Exception/Error" window (just in case).
 - [X] Add application event log control for the "Advanced Mode" window.
 - [ ] Add stylings for the client page.
