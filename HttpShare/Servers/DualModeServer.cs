@@ -24,9 +24,14 @@ public sealed class DualModeServer : IAsyncDisposable
 	// ================================================================================ //
 	// TODO Move these stuff into a separate parent class later
 	// ================================================================================ //
-	public delegate void ServerEvent();
+	public delegate void ServerEventHandler();
 
-	public event ServerEvent? ServerStarted, ServerEnded;
+	public delegate void ServerExceptionEventHandler(Exception exception);
+
+
+	public event ServerEventHandler? ServerStarted, ServerEnded;
+
+	public event ServerExceptionEventHandler? ServerException;
 	// ================================================================================ //
 
 
@@ -112,6 +117,7 @@ public sealed class DualModeServer : IAsyncDisposable
 
 
 
+
 	/// <summary>
 	/// Invoke <see cref="ReceiveFile"/>.
 	/// </summary>
@@ -129,8 +135,16 @@ public sealed class DualModeServer : IAsyncDisposable
 	{
 		CancellationTokenSource.Token.Register(A2);
 
-		App.RunAsync();
-		ServerStarted?.Invoke();
+		try
+		{
+			App.Run();
+			ServerStarted?.Invoke();
+		}
+
+		catch (Exception exception)
+		{
+			ServerException?.Invoke(exception);
+		}
 	}
 
 	private async void A2()

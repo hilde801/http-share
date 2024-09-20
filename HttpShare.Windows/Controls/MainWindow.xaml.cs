@@ -1,6 +1,7 @@
 // Copyright 2024 Hilde801 (https://github.com/hilde801)
 // This file is a part of http-share
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -54,7 +55,6 @@ public partial class MainWindow : Window
 		ServerOptionsControl.IServerOptions serverOptions = serverOptionsControl.ServerOptions;
 
 		ParsedDataContext.IsServerRunning = !ParsedDataContext.IsServerRunning;
-
 		serverOptionsControl.IsEnabled = !serverOptionsControl.IsEnabled;
 
 		if (ParsedDataContext.IsServerRunning)
@@ -82,6 +82,17 @@ public partial class MainWindow : Window
 				Dispatcher.Invoke(() =>
 				{
 					logControl.AddServerEvent(new ServerSessionEvent(ServerEventType.Information, "Server stopped!"));
+				});
+			};
+
+			DualModeServer.ServerException += (Exception exception) =>
+			{
+				Dispatcher.Invoke(() =>
+				{
+					ParsedDataContext.IsServerRunning = false;
+					serverOptionsControl.IsEnabled = true;
+
+					MessageBox.Show(this, exception.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
 				});
 			};
 
