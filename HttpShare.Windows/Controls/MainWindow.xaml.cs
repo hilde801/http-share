@@ -92,6 +92,7 @@ public partial class MainWindow : Window
 					ParsedDataContext.IsServerRunning = false;
 					serverOptionsControl.IsEnabled = true;
 
+					logControl.AddServerEvent(new ServerSessionEvent(ServerEventType.Error, exception.Message));
 					MessageBox.Show(this, exception.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
 				});
 			};

@@ -111,15 +111,9 @@ public sealed class DualModeServer : IAsyncDisposable
 	public ValueTask DisposeAsync() => App.DisposeAsync();
 
 
-	public void Start()
-	{
-		new Thread(A1).Start();
-		ServerStarted?.Invoke();
-	}
+	public void Start() => new Thread(A1).Start();
 
 	public void Stop() => CancellationTokenSource.Cancel();
-
-
 
 
 	/// <summary>
@@ -139,15 +133,30 @@ public sealed class DualModeServer : IAsyncDisposable
 	{
 		CancellationTokenSource.Token.Register(A2);
 
+		Task serverRunTask = App.RunAsync();
+
+		if (serverRunTask.Exception?.InnerExceptions.Count > 0)
+		{
+			ServerException?.Invoke(serverRunTask.Exception?.InnerExceptions[0]!);
+			return;
+		}
+
+		ServerStarted?.Invoke();
+
+		/*if (serverRunTask.Exception)
+		{
+
+		}
+
 		try
 		{
-			App.Run();
+			App.RunAsync()
 		}
 
 		catch (Exception exception)
 		{
 			ServerException?.Invoke(exception);
-		}
+		}*/
 	}
 
 	private async void A2()
