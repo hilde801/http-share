@@ -1,6 +1,10 @@
 ## Prototype 4
 
 - Added the "Log" tab in the advanced window
+- Added error window
+- Added mandatory display name input
+- Bug fixes
+- Code cleanup
 
 ## Prototype 3
 
