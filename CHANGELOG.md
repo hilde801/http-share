@@ -2,7 +2,8 @@
 
 - Added the "Log" tab in the advanced window
 - Added error window
-- Added mandatory display name input
+- Added mandatory user log in
+- Removed display name input in the upload form
 - Bug fixes
 - Code cleanup
 
