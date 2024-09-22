@@ -63,20 +63,20 @@ public sealed class FileController(ServerSession serverSession) : CustomControll
 
 		List<IInboxFile> uploadFiles = [];
 
+		string displayName = User.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
+
 		foreach (IFormFile file in uploadDataModel.Files)
 		{
 			using MemoryStream fileStream = new MemoryStream();
 			file.CopyTo(fileStream);
 
-			InboxFile tempIndexFile = new InboxFile(uploadDataModel.DisplayName, file.FileName, fileStream.ToArray());
+			InboxFile tempIndexFile = new InboxFile(displayName, file.FileName, fileStream.ToArray());
 			uploadFiles.Add(tempIndexFile);
 
 			fileStream.Flush();
 		}
 
-
-		string displayName = User.Claims.First(claim => claim.Type == ClaimTypes.Name).Value,
-			message = $"File upload ({uploadFiles.Count}) from {displayName}.";
+		string message = $"File upload ({uploadFiles.Count}) from {displayName}.";
 
 		ServerSession.InvokeServerEvent(new ServerSessionEvent(ServerEventType.Information, message));
 

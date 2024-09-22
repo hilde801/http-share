@@ -43,8 +43,10 @@
 @if (receiveSession)
 {
     <form enctype="multipart/form-data" method="post" action="/Upload/">
-        <label for="DisplayName">Your display name:</label>
-        <input type="text" asp-for="DisplayName" required />
+        @*
+            <label for="DisplayName">Your display name:</label>
+            <input type="text" asp-for="DisplayName" required />
+        *@
 
         <input type="file" asp-for="Files" multiple required />
 
