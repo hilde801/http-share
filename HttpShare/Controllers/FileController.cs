@@ -1,22 +1,27 @@
 using System.IO.Compression;
+using System.Security.Claims;
 
 using HttpShare.Files;
 using HttpShare.Models;
 using HttpShare.Sessions;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HttpShare.Controllers;
 
 [Controller]
-public sealed class FileController(ServerSession serverSession) : Controller
+[Authorize(Policy = Constants.LoggedInUsersOnlyPolicy,
+	AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+public sealed class FileController(ServerSession serverSession) : CustomController(serverSession)
 {
 	[HttpGet]
 	[Route("/Download/")]
 	public IActionResult Download()
 	{
-		bool sendSession = serverSession is ISendSession;
+		bool sendSession = ServerSession is ISendSession;
 
 		if (!sendSession) return NotFound();
 
@@ -24,7 +29,7 @@ public sealed class FileController(ServerSession serverSession) : Controller
 
 		using (ZipArchive zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create))
 		{
-			IEnumerable<IOutboxFile> outboxFiles = (serverSession as ISendSession)!.OutboxFiles;
+			IEnumerable<IOutboxFile> outboxFiles = (ServerSession as ISendSession)!.OutboxFiles;
 
 			foreach (IOutboxFile file in outboxFiles)
 			{
@@ -39,6 +44,11 @@ public sealed class FileController(ServerSession serverSession) : Controller
 		memoryStream.Flush();
 		memoryStream.Dispose();
 
+		string displayName = User.Claims.First(claim => claim.Type == ClaimTypes.Name).Value,
+			message = $"File download to {displayName}.";
+
+		ServerSession.InvokeServerEvent(new ServerSessionEvent(ServerEventType.Information, message));
+
 		return File(zipData, "application/zip-compressed",
 			$"HttpShare_{DateTime.Now:yyyyMMdd_HHmmss}.zip");
 	}
@@ -48,23 +58,29 @@ public sealed class FileController(ServerSession serverSession) : Controller
 	[Route("/Upload/")]
 	public IActionResult Upload([FromForm] UploadDataModel uploadDataModel)
 	{
-		bool isReceiveSession = serverSession is IReceiveSession;
+		bool isReceiveSession = ServerSession is IReceiveSession;
 		if (!isReceiveSession) return NotFound();
 
 		List<IInboxFile> uploadFiles = [];
+
+		string displayName = User.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
 
 		foreach (IFormFile file in uploadDataModel.Files)
 		{
 			using MemoryStream fileStream = new MemoryStream();
 			file.CopyTo(fileStream);
 
-			InboxFile tempIndexFile = new InboxFile(uploadDataModel.DisplayName, file.FileName, fileStream.ToArray());
+			InboxFile tempIndexFile = new InboxFile(displayName, file.FileName, fileStream.ToArray());
 			uploadFiles.Add(tempIndexFile);
 
 			fileStream.Flush();
 		}
 
-		(serverSession as IReceiveSession)!.InvokeReceivedFilesEvent(uploadFiles);
+		string message = $"File upload ({uploadFiles.Count}) from {displayName}.";
+
+		ServerSession.InvokeServerEvent(new ServerSessionEvent(ServerEventType.Information, message));
+
+		(ServerSession as IReceiveSession)!.InvokeReceivedFilesEvent(uploadFiles);
 		return Redirect("/");
 	}
 }

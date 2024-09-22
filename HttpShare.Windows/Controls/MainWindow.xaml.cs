@@ -1,12 +1,14 @@
 // Copyright 2024 Hilde801 (https://github.com/hilde801)
 // This file is a part of http-share
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
 using HttpShare.Files;
 using HttpShare.Servers;
+using HttpShare.Sessions;
 using HttpShare.Windows.DataContexts;
 
 namespace HttpShare.Windows.Controls;
@@ -48,12 +50,11 @@ public partial class MainWindow : Window
 	/// The handler method for the server toggle button on click event.
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
-	private async void OnClickServerToggleButton(object? sender, RoutedEventArgs _)
+	private /*async*/ void OnClickServerToggleButton(object? sender, RoutedEventArgs _)
 	{
 		ServerOptionsControl.IServerOptions serverOptions = serverOptionsControl.ServerOptions;
 
 		ParsedDataContext.IsServerRunning = !ParsedDataContext.IsServerRunning;
-
 		serverOptionsControl.IsEnabled = !serverOptionsControl.IsEnabled;
 
 		if (ParsedDataContext.IsServerRunning)
@@ -62,18 +63,64 @@ public partial class MainWindow : Window
 				outboxControl.OutboxFiles,
 				serverOptions.EnablePassword ? serverOptions.Password : null);
 
-			DualModeServer.ReceiveFile += OnReceivedFiles;
+			DualModeServer.DualSession.OnReceivedFiles += OnReceivedFiles;
+			DualModeServer.DualSession.ServerEvent += DualSessionServerEvent;
 
-			ServerStartWindow serverStartWindow = new ServerStartWindow(serverOptions.Port) { Owner = this };
+			DualModeServer.ServerStarted += () =>
+			{
+				Dispatcher.Invoke(() =>
+				{
+					ServerStartWindow serverStartWindow = new ServerStartWindow(serverOptions.Port) { Owner = this };
+					serverStartWindow.Show();
+
+					logControl.AddServerEvent(new ServerSessionEvent(ServerEventType.Information, "Server started!"));
+				});
+			};
+
+			DualModeServer.ServerEnded += () =>
+			{
+				Dispatcher.Invoke(() =>
+				{
+					logControl.AddServerEvent(new ServerSessionEvent(ServerEventType.Information, "Server stopped!"));
+				});
+			};
+
+			DualModeServer.ServerException += (Exception exception) =>
+			{
+				Dispatcher.Invoke(() =>
+				{
+					ParsedDataContext.IsServerRunning = false;
+					serverOptionsControl.IsEnabled = true;
+
+					logControl.AddServerEvent(new ServerSessionEvent(ServerEventType.Error, exception.Message));
+					MessageBox.Show(this, exception.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+				});
+			};
+
+			// TODO Uncomment this later
+			/*ServerStartWindow serverStartWindow = new ServerStartWindow(serverOptions.Port) { Owner = this };
 			serverStartWindow.Show();
 
-			await DualModeServer!.StartAsync();
+			logControl.AddServerEvent(new ServerEvent(ServerEventType.Information, "Server started!"));*/
+
+			DualModeServer.Start();
 		}
 
-		else await DualModeServer!.DisposeAsync();
+		else
+		{
+			// TODO Uncomment this later
+			// logControl.AddServerEvent(new ServerEvent(ServerEventType.Information, "Server stopped!"));
+
+			DualModeServer!.Stop();
+		}
 
 		outboxControl.IsEnabled = !ParsedDataContext.IsServerRunning;
 
+	}
+
+	private void DualSessionServerEvent(ServerSessionEvent serverEvent)
+	{
+		Dispatcher.Invoke(() => logControl.AddServerEvent(serverEvent));
 	}
 
 	/// <summary>
@@ -88,11 +135,12 @@ public partial class MainWindow : Window
 	/// <summary>
 	/// The handler method for file received event. 
 	/// </summary>
-	protected async override void OnClosing(CancelEventArgs e)
+	protected /*async*/ override void OnClosing(CancelEventArgs e)
 	{
 		if (ParsedDataContext.IsServerRunning && DualModeServer != null)
 		{
-			await DualModeServer.DisposeAsync();
+			//await DualModeServer.DisposeAsync();
+			DualModeServer!.Stop();
 		}
 
 		base.OnClosing(e);

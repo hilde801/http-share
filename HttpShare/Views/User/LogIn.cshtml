@@ -1,0 +1,17 @@
+@namespace HttpShare.Views.Users
+
+@{
+    Layout = "../_Layout";
+}
+
+<main>
+    @using (Html.BeginForm("LogIn", "User", null, FormMethod.Post, true, null))
+    {
+        <label for="displayName">Display Name:</label>
+        <input type="text" id="displayName" name="displayName" required />
+
+        <button type="submit">
+            <p>Continue</p>
+        </button>
+    }
+</main>

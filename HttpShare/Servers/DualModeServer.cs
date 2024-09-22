@@ -1,6 +1,8 @@
 // Copyright 2024 Hilde801 (https://github.com/hilde801)
 // This file is a part of http-share
 
+using System.Security.Claims;
+
 using HttpShare.Controllers;
 using HttpShare.Files;
 using HttpShare.Sessions;
@@ -19,21 +21,30 @@ namespace HttpShare.Servers;
 /// </summary>
 public sealed class DualModeServer : IAsyncDisposable
 {
-	/// <summary>
-	/// The delegate of <see cref="ReceiveFile"/> handler. 
-	/// </summary>
-	/// <param name="inboxFiles"></param>
-	public delegate void ReceiveFilesHandler(ICollection<IInboxFile> inboxFiles);
+	// ================================================================================ //
+	// TODO Move these stuff into a separate parent class later
+	// ================================================================================ //
+	public delegate void ServerEventHandler();
 
-	/// <summary>
-	/// Invoked when the the server receive files from client devices. 
-	/// </summary>
-	public event ReceiveFilesHandler? ReceiveFile;
+	public delegate void ServerExceptionEventHandler(Exception exception);
+
+
+	public event ServerEventHandler? ServerStarted, ServerEnded;
+
+	public event ServerExceptionEventHandler? ServerException;
+	// ================================================================================ //
+
 
 	/// <summary>
 	/// The <see cref="WebApplication"/> instance.
 	/// </summary>
 	private WebApplication App { get; }
+
+
+	public DualSession DualSession { get; }
+
+
+	private CancellationTokenSource CancellationTokenSource { get; }
 
 
 	/// <summary>
@@ -43,8 +54,9 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// <param name="outboxFiles">A collection of files to be sent to client devices.</param>
 	public DualModeServer(int port, IEnumerable<IOutboxFile> outboxFiles, string? password = null)
 	{
-		DualSession dualSession = new DualSession(outboxFiles) { Password = password };
-		dualSession.OnReceivedFiles += HandleReceivedFiles;
+		CancellationTokenSource = new CancellationTokenSource();
+
+		DualSession = new DualSession(outboxFiles) { Password = password };
 
 		WebApplicationBuilder builder = WebApplication.CreateBuilder();
 
@@ -53,10 +65,24 @@ public sealed class DualModeServer : IAsyncDisposable
 
 		builder.Services
 			.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-			.AddCookie(ConfigureCookieAuthentication);
+			.AddCookie(options =>
+			{
+				options.LoginPath = "/LogIn/";
+
+				options.Cookie.IsEssential = true;
+				options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+			});
+
+		builder.Services.AddAuthorization(options =>
+		{
+			options.AddPolicy(Constants.LoggedInUsersOnlyPolicy, policy =>
+			{
+				policy.RequireClaim(ClaimTypes.Name);
+			});
+		});
 
 		builder.Services.AddAntiforgery();
-		builder.Services.AddSingleton<ServerSession>(dualSession);
+		builder.Services.AddSingleton<ServerSession>(DualSession);
 
 		builder.WebHost.ConfigureKestrel(ConfigureKestrel);
 
@@ -74,20 +100,27 @@ public sealed class DualModeServer : IAsyncDisposable
 	/// Starts the server.
 	/// </summary>
 	/// <returns></returns>
+	[Obsolete]
 	public Task StartAsync() => App.RunAsync();
 
 	/// <summary>
 	/// Stop and dispose the server.
 	/// </summary>
 	/// <returns></returns>
+	[Obsolete]
 	public ValueTask DisposeAsync() => App.DisposeAsync();
+
+
+	public void Start() => new Thread(A1).Start();
+
+	public void Stop() => CancellationTokenSource.Cancel();
 
 
 	/// <summary>
 	/// Invoke <see cref="ReceiveFile"/>.
 	/// </summary>
 	/// <param name="inboxFiles">A collection of files received from the client.</param>
-	private void HandleReceivedFiles(ICollection<IInboxFile> inboxFiles) => ReceiveFile?.Invoke(inboxFiles);
+	//private void HandleReceivedFiles(ICollection<IInboxFile> inboxFiles) => ReceiveFile?.Invoke(inboxFiles);
 
 
 	private void ConfigureKestrel(KestrelServerOptions options)
@@ -95,11 +128,44 @@ public sealed class DualModeServer : IAsyncDisposable
 		options.Limits.MaxRequestBodySize = long.MaxValue;
 	}
 
-	private void ConfigureCookieAuthentication(CookieAuthenticationOptions options)
-	{
-		options.LoginPath = "/";
 
-		options.Cookie.IsEssential = true;
-		options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+	private void A1()
+	{
+		CancellationTokenSource.Token.Register(A2);
+
+		Task serverRunTask = App.RunAsync();
+
+		if (serverRunTask.Exception?.InnerExceptions.Count > 0)
+		{
+			ServerException?.Invoke(serverRunTask.Exception?.InnerExceptions[0]!);
+			return;
+		}
+
+		ServerStarted?.Invoke();
+
+		/*if (serverRunTask.Exception)
+		{
+
+		}
+
+		try
+		{
+			App.RunAsync()
+		}
+
+		catch (Exception exception)
+		{
+			ServerException?.Invoke(exception);
+		}*/
+	}
+
+	private async void A2()
+	{
+		CancellationTokenSource.Dispose();
+
+		await App.StopAsync();
+		await App.DisposeAsync();
+
+		ServerEnded?.Invoke();
 	}
 }

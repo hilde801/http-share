@@ -10,9 +10,6 @@ namespace HttpShare.Controllers;
 
 public abstract class CustomController(ServerSession serverSession) : Controller
 {
-	public const string DisplayNameClaim = "DisplayName";
-
-
 	protected ServerSession ServerSession => serverSession;
 
 	protected string? DisplayName
@@ -36,7 +33,7 @@ public abstract class CustomController(ServerSession serverSession) : Controller
 
 	protected async Task UserLogIn(string displayName)
 	{
-		Claim[] claims = [new Claim(DisplayNameClaim, displayName)];
+		Claim[] claims = [new Claim(ClaimTypes.Name, displayName)];
 
 		ClaimsIdentity identity = new ClaimsIdentity(claims,
 			CookieAuthenticationDefaults.AuthenticationScheme);
@@ -49,6 +46,7 @@ public abstract class CustomController(ServerSession serverSession) : Controller
 
 	private bool DisplayNamePredicate(Claim claim)
 	{
-		return claim.Type.Equals(DisplayNameClaim, StringComparison.InvariantCultureIgnoreCase);
+		return claim.Type
+			.Equals(ClaimTypes.Name, StringComparison.InvariantCultureIgnoreCase);
 	}
 }
